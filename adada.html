@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dragos Paraschiv</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #F7F6F2;
+      --navy:     #0D1B2A;
+      --steel:    #3A6EA5;
+      --amber:    #E8A217;
+      --muted:    #6B7A8D;
+      --card-bg:  #EEECEA;
+      --border:   #D6D3CD;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--navy);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ─────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 5vw;
+      background: rgba(247,246,242,0.88);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 1.05rem;
+      letter-spacing: -0.02em; color: var(--navy);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--steel); }
+    nav ul { list-style: none; display: flex; gap: 2.2rem; }
+    nav ul a {
+  font-size: 0.85rem; 
+  font-weight: 500; 
+  letter-spacing: 0.04em;
+  text-transform: uppercase; 
+  color: var(--muted); 
+  text-decoration: none; /* This removes the underline */
+  transition: all 0.3s ease; /* Smooths the transition */
+  padding-bottom: 4px; /* Space for our new custom line */
+  border-bottom: 2px solid transparent; /* Keeps the layout stable */
+            }
+    nav ul a:hover {
+  color: var(--steel); /* Changes text color to blue */
+  border-bottom: 2px solid var(--steel); /* Adds a line only on hover */
+}
+
+    /* ── HERO ────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 8rem 5vw 5rem;
+      position: relative; overflow: hidden;
+    }
+
+    /* Blueprint grid — the signature element */
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(58,110,165,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(58,110,165,0.07) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(ellipse 80% 80% at 70% 50%, black 30%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 80% at 70% 50%, black 30%, transparent 80%);
+      animation: gridFade 1.4s ease-out both;
+    }
+    @keyframes gridFade {
+      from { opacity: 0; transform: scale(1.04); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .hero-content { max-width: 680px; position: relative; z-index: 1; }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--steel);
+      margin-bottom: 1.6rem;
+    }
+    .hero-eyebrow::before {
+      content: ''; display: block;
+      width: 28px; height: 1.5px; background: var(--steel);
+    }
+
+    .hero-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 700; line-height: 1.06;
+      letter-spacing: -0.03em; color: var(--navy);
+      animation: slideUp 0.8s 0.2s ease-out both;
+    }
+    .hero-name .accent { color: var(--steel); }
+
+    .hero-tagline {
+      margin-top: 1.4rem;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      font-weight: 300; line-height: 1.65;
+      color: var(--muted); max-width: 520px;
+      animation: slideUp 0.8s 0.35s ease-out both;
+    }
+
+    .hero-cta {
+      margin-top: 2.8rem; display: flex; gap: 1rem; flex-wrap: wrap;
+      animation: slideUp 0.8s 0.5s ease-out both;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1.6rem; border-radius: 4px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.88rem; font-weight: 600;
+      text-decoration: none; transition: all 0.2s; cursor: pointer; border: none;
+    }
+    .btn-primary {
+      background: var(--steel); color: #fff;
+    }
+    .btn-primary:hover { background: #2e5a8a; transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent; color: var(--navy);
+      border: 1.5px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--steel); color: var(--steel); transform: translateY(-1px); }
+
+    .hero-stats {
+      margin-top: 4rem; display: flex; gap: 2.5rem; flex-wrap: wrap;
+      animation: slideUp 0.8s 0.65s ease-out both;
+    }
+    .stat-item { display: flex; flex-direction: column; gap: 0.2rem; }
+    .stat-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.9rem; font-weight: 700; color: var(--navy); line-height: 1;
+    }
+    .stat-num span { color: var(--amber); }
+    .stat-label { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTIONS SHARED ────────────────────────── */
+    section { padding: 6rem 5vw; }
+    section + section { border-top: 1px solid var(--border); }
+
+    .section-label {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--steel); font-weight: 500; margin-bottom: 0.9rem;
+    }
+    .section-label::before {
+      content: ''; width: 20px; height: 1.5px; background: var(--steel);
+    }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 700; letter-spacing: -0.025em; line-height: 1.15;
+    }
+
+    /* ── ABOUT ───────────────────────────────────── */
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: start; margin-top: 3rem;
+    }
+    .about-text p {
+      font-size: 1.02rem; line-height: 1.75; color: #3a4a5c;
+      margin-bottom: 1.1rem;
+    }
+    .about-text p:last-child { margin-bottom: 0; }
+
+    .skills-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem;
+    }
+    .skill-tag {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 3px; padding: 0.6rem 0.9rem;
+      font-size: 0.82rem; font-weight: 500; color: var(--navy);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .skill-tag::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--steel); flex-shrink: 0;
+    }
+    .skills-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: var(--navy);
+    }
+
+    /* ── PROJECTS ────────────────────────────────── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .project-card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 6px; padding: 1.8rem;
+      display: flex; flex-direction: column; gap: 1rem;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+    .project-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--steel);
+      box-shadow: 0 8px 28px rgba(13,27,42,0.09);
+    }
+    .project-icon {
+      width: 44px; height: 44px; border-radius: 4px;
+      background: var(--steel); display: flex; align-items: center; justify-content: center;
+    }
+    .project-icon svg { width: 22px; height: 22px; fill: none; stroke: #fff; stroke-width: 1.8; }
+    .project-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .tag {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--steel);
+      background: rgba(58,110,165,0.1);
+      padding: 0.25rem 0.55rem; border-radius: 2px;
+    }
+    .project-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.15rem; font-weight: 600; line-height: 1.3; color: var(--navy);
+    }
+    .project-desc {
+      font-size: 0.88rem; line-height: 1.65; color: var(--muted); flex: 1;
+    }
+    .project-link {
+      font-size: 0.82rem; font-weight: 600; color: var(--steel);
+      text-decoration: none; display: inline-flex; align-items: center; gap: 0.35rem;
+      margin-top: auto;
+    }
+    .project-link:hover { text-decoration: underline; }
+
+    /* ── PROJECT DETAIL SECTIONS ────────────────── */
+    .project-detail {
+      display: none;
+      padding: 5rem 5vw;
+      border-top: 1px solid var(--border);
+    }
+    .project-detail.active { display: block; }
+    .detail-back {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.82rem; font-weight: 600; color: var(--steel);
+      text-decoration: none; margin-bottom: 2.5rem;
+      cursor: pointer; background: none; border: none; padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+    .detail-back:hover { text-decoration: underline; }
+    .detail-header { margin-bottom: 2.5rem; }
+    .detail-header .project-tags { margin-bottom: 1rem; }
+    .detail-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 700; letter-spacing: -0.025em; line-height: 1.15; color: var(--navy);
+      margin-bottom: 1rem;
+    }
+    .detail-intro {
+      font-size: 1.05rem; line-height: 1.75; color: #3a4a5c; max-width: 680px;
+    }
+    .detail-body {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem;
+    }
+    .detail-section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--steel); margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .detail-section-title::before {
+      content: ''; width: 16px; height: 1.5px; background: var(--steel);
+    }
+    .detail-text {
+      font-size: 0.95rem; line-height: 1.75; color: #3a4a5c;
+    }
+    .detail-text p { margin-bottom: 0.9rem; }
+    .detail-text p:last-child { margin-bottom: 0; }
+    .detail-list {
+      list-style: none; display: flex; flex-direction: column; gap: 0.55rem;
+    }
+    .detail-list li {
+      font-size: 0.9rem; color: #3a4a5c; line-height: 1.5;
+      display: flex; align-items: flex-start; gap: 0.6rem;
+    }
+    .detail-list li::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--steel); flex-shrink: 0; margin-top: 0.45rem;
+    }
+    .detail-placeholder {
+      background: var(--card-bg); border: 1.5px dashed var(--border);
+      border-radius: 6px; padding: 3rem 2rem;
+      text-align: center; color: var(--muted); font-size: 0.88rem; line-height: 1.6;
+    }
+    .detail-placeholder strong { display: block; margin-bottom: 0.4rem; font-weight: 600; color: var(--navy); }
+    @media (max-width: 768px) {
+      .detail-body { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
+    /* ── EDUCATION / TIMELINE ─────────────────── */
+    .timeline { margin-top: 3rem; display: flex; flex-direction: column; gap: 0; }
+    .timeline-item {
+      display: grid; grid-template-columns: 140px 1fr;
+      gap: 2rem; padding: 2rem 0;
+      border-top: 1px solid var(--border);
+    }
+    .timeline-item:last-child { border-bottom: 1px solid var(--border); }
+    .timeline-year {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.8rem; font-weight: 600; color: var(--muted);
+      letter-spacing: 0.05em; padding-top: 0.15rem;
+    }
+    .timeline-body {}
+    .timeline-role {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.05rem; font-weight: 600; color: var(--navy);
+    }
+    .timeline-org { font-size: 0.88rem; color: var(--steel); margin-top: 0.2rem; font-weight: 500; }
+    .timeline-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin-top: 0.7rem; }
+
+    /* ── CONTACT ─────────────────────────────────── */
+    #contact { text-align: center; }
+    .contact-inner { max-width: 560px; margin: 0 auto; }
+    .contact-inner .section-label { justify-content: center; }
+    .contact-inner .section-label::before { display: none; }
+    .contact-sub {
+      margin-top: 1rem; font-size: 1rem; color: var(--muted); line-height: 1.65;
+    }
+    .contact-links {
+      margin-top: 2.5rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    }
+    .contact-item {
+      display: flex; align-items: center; gap: 0.55rem;
+      font-size: 0.9rem; color: var(--navy); text-decoration: none; font-weight: 500;
+      padding: 0.65rem 1.2rem; border: 1.5px solid var(--border); border-radius: 4px;
+      transition: all 0.2s;
+    }
+    .contact-item:hover { border-color: var(--steel); color: var(--steel); background: rgba(58,110,165,0.05); }
+    .contact-item svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+
+    /* ── FOOTER ──────────────────────────────────── */
+    footer {
+      padding: 2rem 5vw;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;
+    }
+    footer p { font-size: 0.78rem; color: var(--muted); }
+    footer a { color: var(--steel); text-decoration: none; }
+
+    /* ── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 768px) {
+      nav ul { gap: 1.2rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .timeline-item { grid-template-columns: 1fr; gap: 0.4rem; }
+      .hero-stats { gap: 1.5rem; }
+    }
+    @media (max-width: 480px) {
+      nav ul { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#hero">
+    Turning theories <span>into tools</span>
+  </a>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+ 
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-content">
+      <div class="hero-eyebrow">Mechanical Engineering Student</div>
+      <h1 class="hero-name">
+        Hi, I'm<br><span class="accent">Dragoș Paraschiv</span>
+      </h1>
+      <p class="hero-tagline">
+        Second-year Mechanical Engineering student with a passion for design, prototyping, and solving real-world problems through thoughtful engineering.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View My Work</a>
+        <a href="#contact" class="btn btn-outline">Get in Touch</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-num">3<span>rd</span></span>
+          <span class="stat-label">Year of Study</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">6<span>+</span></span>
+          <span class="stat-label">Projects Completed</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">3</span>
+          <span class="stat-label">Tools & CAD Skills</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">About Me</div>
+    <h2 class="section-title">Engineering is how<br>I think about everything.</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm currently pursuing a degree in Mechanical Engineering, driven by a deep curiosity about how things work and how they can be made better. Whether it's analysing stress in a structure or sketching up a prototype, I approach every challenge with precision and creativity.
+        </p>
+        <p>
+          Outside the lecture hall, I spend time in the student workshop, iterating on ideas and building functional models. I believe the best engineers learn as much with their hands as they do from textbooks.
+        </p>
+        <p>
+          I'm actively looking for internship opportunities and collaborative projects where I can apply my skills and grow as an engineer.
+        </p>
+      </div>
+      <div>
+        <p class="skills-heading">Technical Skills</p>
+        <div class="skills-grid">
+          <div class="skill-tag">SolidWorks CAD</div>
+          <div class="skill-tag">AutoCAD</div>
+          <div class="skill-tag">MATLAB</div>
+          <div class="skill-tag">FEA (ANSYS)</div>
+          <div class="skill-tag">3D Printing / FDM</div>
+          <div class="skill-tag">Laser Cutting</div>
+          <div class="skill-tag">Statics & Dynamics</div>
+          <div class="skill-tag">Thermodynamics</div>
+          <div class="skill-tag">Technical Drawing</div>
+          <div class="skill-tag">Python (basics)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label">Projects</div>
+    <h2 class="section-title">What I've been building.</h2>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-icon">
+          <!-- Gear icon -->
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </div>
+        <div class="project-tags"><span class="tag">CAD</span><span class="tag">3D Print</span></div>
+        <h3 class="project-title">Adjustable Bicycle Stem Adapter</h3>
+        <p class="project-desc">Designed a universal stem adapter in SolidWorks to fit two incompatible handlebar standards. Iterated through four prototypes using FDM printing, conducting basic load analysis to ensure structural integrity under cycling loads.</p>
+        <a class="project-link" href="#project-bicycle-stem" onclick="openProject('project-bicycle-stem')">View Design Files ↗</a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">
+          <!-- Chart/structure icon -->
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="project-tags"><span class="tag">FEA</span><span class="tag">ANSYS</span></div>
+        <h3 class="project-title">Truss Bridge Structural Analysis</h3>
+        <p class="project-desc">Performed static analysis on a Pratt truss bridge model using ANSYS. Compared analytical hand calculations to simulated results, identifying failure points under distributed loading and proposing cross-section reinforcements.</p>
+        <a class="project-link" href="#project-truss-bridge" onclick="openProject('project-truss-bridge')">View Report ↗</a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">
+          <!-- Thermometer icon -->
+          <svg viewBox="0 0 24 24"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
+        </div>
+        <div class="project-tags"><span class="tag">Thermodynamics</span><span class="tag">MATLAB</span></div>
+        <h3 class="project-title">Heat Exchanger Efficiency Model</h3>
+        <p class="project-desc">Built a MATLAB model to simulate counter-flow heat exchanger performance under varying flow rates and temperatures. Compared ε-NTU and LMTD methods, producing charts for design selection at different operating conditions.</p>
+        <a class="project-link" href="#project-heat-exchanger" onclick="openProject('project-heat-exchanger')">View Code ↗</a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">
+          <!-- Box icon -->
+          <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+        </div>
+        <div class="project-tags"><span class="tag">Prototyping</span><span class="tag">Design</span></div>
+        <h3 class="project-title">Ergonomic Desk Organiser</h3>
+        <p class="project-desc">A first-year design project applying DFM principles. Modelled in SolidWorks, manufactured using laser cutting and hand assembly. Focused on parametric design, allowing the model to be resized by changing a single variable.</p>
+        <a class="project-link" href="#project-desk-organiser" onclick="openProject('project-desk-organiser')">View Drawings ↗</a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">
+          <!-- Activity icon -->
+          <svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+        </div>
+        <div class="project-tags"><span class="tag">MATLAB</span><span class="tag">Dynamics</span></div>
+        <h3 class="project-title">Pendulum Motion Simulation</h3>
+        <p class="project-desc">Simulated damped pendulum dynamics in MATLAB, comparing small-angle approximations to full nonlinear solutions. Animated the motion and explored how drag coefficient affects energy dissipation over time.</p>
+        <a class="project-link" href="#project-pendulum" onclick="openProject('project-pendulum')">View Simulation ↗</a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">
+          <!-- Layers icon -->
+          <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+        </div>
+        <div class="project-tags"><span class="tag">Team Project</span><span class="tag">CAD</span></div>
+        <h3 class="project-title">Pneumatic Gripper Mechanism</h3>
+        <p class="project-desc">Group project to design a two-finger pneumatic gripper for handling irregular objects. Contributed mechanical linkage design and GD&T drawings. The prototype achieved reliable grip across 5 different test geometries.</p>
+        <a class="project-link" href="#project-gripper" onclick="openProject('project-gripper')">View Poster ↗</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EDUCATION & EXPERIENCE -->
+  <section id="education">
+    <div class="section-label">Background</div>
+    <h2 class="section-title">Education &amp; Experience</h2>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-year">2024 – Present</div>
+        <div class="timeline-body">
+          <div class="timeline-role">BEng Mechanical Engineering</div>
+          <div class="timeline-org">University of Technology — Eindhoven</div>
+          <div class="timeline-desc">Currently in second year. Core modules include Thermodynamics, Mechanics of Materials, Fluid Mechanics, Engineering Mathematics, and Design & Manufacturing. Consistent top-third results. Member of the university's Formula Student team.</div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-year">Summer 2024</div>
+        <div class="timeline-body">
+          <div class="timeline-role">Workshop Volunteer</div>
+          <div class="timeline-org">Makerspace Eindhoven</div>
+          <div class="timeline-desc">Assisted visitors with CAD and 3D printing workflows. Gained hands-on experience with FDM and resin printing, laser cutting, and basic CNC routing. Helped run two introductory workshops.</div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-year">2022 – 2024</div>
+        <div class="timeline-body">
+          <div class="timeline-role">Secondary Education — STEM Track</div>
+          <div class="timeline-org">Stedelijk College Eindhoven</div>
+          <div class="timeline-desc">Graduated with distinction. Final-year project: a self-watering planter with Arduino-controlled soil moisture sensing. Winner of the school's innovation fair.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="section-label">Contact</div>
+      <h2 class="section-title">Let's work together.</h2>
+      <p class="contact-sub">
+        I'm open to internships, part-time roles, and collaborative engineering projects. Feel free to reach out — I'd love to connect.
+      </p>
+      <div class="contact-links">
+        <a class="contact-item" href="mailto:d.paraschiv@student.tue.nl">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Email Me
+        </a>
+        <a class="contact-item" href="https://www.linkedin.com/in/paraschiv-dragos" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+    
+        <a class="contact-item" href="resume.pdf" download>
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          Download CV
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECT DETAILS -->
+
+  <section class="project-detail" id="project-bicycle-stem">
+    <button class="detail-back" onclick="closeProject('project-bicycle-stem')">← Back to Projects</button>
+    <div class="detail-header">
+      <div class="project-tags"><span class="tag">CAD</span><span class="tag">3D Print</span><span class="tag">Prototyping</span></div>
+      <h2 class="detail-title">Adjustable Bicycle Stem Adapter</h2>
+      <p class="detail-intro">A universal stem adapter bridging two incompatible handlebar diameter standards, designed end-to-end in SolidWorks and validated through four iterative FDM prototypes.</p>
+    </div>
+    <div class="detail-body">
+      <div>
+        <div class="detail-section-title">Overview</div>
+        <div class="detail-text">
+          <p>The problem arose when a friend upgraded their handlebars but found the new 31.8 mm clamp incompatible with their existing 25.4 mm stem. Off-the-shelf shims existed but lacked adjustability and reliable clamping force distribution.</p>
+          <p>I modelled a two-piece adapter with an integrated split-clamp design, allowing the clamping torque to be evenly distributed around the bar. The geometry was fully parametric, so swapping between standard sizes required only a single dimension change.</p>
+          <p>Structural integrity under typical cycling loads (approx. 80 N handlebar pull force) was checked using SolidWorks Simulation with a basic static study. The fourth prototype passed a conservative 3× load factor without failure.</p>
+        </div>
+      </div>
+      <div>
+        <div class="detail-section-title">Key Outcomes</div>
+        <ul class="detail-list">
+          <li>4 prototype iterations from initial concept to final part</li>
+          <li>Compatible with both 25.4 mm and 31.8 mm handlebar standards</li>
+          <li>Parametric SolidWorks model — resizable by changing two variables</li>
+          <li>Static load analysis confirming 3× safety factor under cycling loads</li>
+          <li>Printed in PETG for improved layer adhesion vs PLA in early runs</li>
+          <li>Total material cost under €2 per unit at final spec</li>
+        </ul>
+        <div style="margin-top:2rem">
+          <div class="detail-section-title">Tools Used</div>
+          <ul class="detail-list">
+            <li>SolidWorks (part modelling, assembly, Simulation)</li>
+            <li>FDM 3D printing — PLA → PETG iteration</li>
+            <li>Digital callipers for tolerance validation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:2.5rem">
+      <div class="detail-section-title">Files & Assets</div>
+      <div class="detail-placeholder">
+        <strong>Design files coming soon</strong>
+        SolidWorks part files, assembly, and simulation report will be linked here. Contact me directly if you'd like to see them now.
+      </div>
+    </div>
+  </section>
+
+  <section class="project-detail" id="project-truss-bridge">
+    <button class="detail-back" onclick="closeProject('project-truss-bridge')">← Back to Projects</button>
+    <div class="detail-header">
+      <div class="project-tags"><span class="tag">FEA</span><span class="tag">ANSYS</span><span class="tag">Structural</span></div>
+      <h2 class="detail-title">Truss Bridge Structural Analysis</h2>
+      <p class="detail-intro">A full static analysis of a Pratt truss bridge model using ANSYS, cross-validated against hand calculations and used to identify failure points and propose reinforcements.</p>
+    </div>
+    <div class="detail-body">
+      <div>
+        <div class="detail-section-title">Overview</div>
+        <div class="detail-text">
+          <p>This project was completed as part of the Mechanics of Materials module. The brief was to model a Pratt truss under a distributed pedestrian load of 5 kN/m and evaluate stress distribution, nodal deflections, and likely failure modes.</p>
+          <p>I built the truss geometry in ANSYS Mechanical using beam elements, applied pinned-roller boundary conditions, and ran a linear static analysis. Results were then compared to analytical calculations done by hand using the method of sections.</p>
+          <p>The simulation and hand calculations agreed within 4% for all member forces — the discrepancy was traced to joint eccentricity in the FE model. Two lower chord members near mid-span were identified as critical; I proposed increasing their cross-section from 50×50 mm to 60×60 mm hollow section.</p>
+        </div>
+      </div>
+      <div>
+        <div class="detail-section-title">Key Outcomes</div>
+        <ul class="detail-list">
+          <li>FEA model with 23 members and 13 nodes</li>
+          <li>Distributed load of 5 kN/m across upper chord</li>
+          <li>Hand vs simulation agreement within 4% across all members</li>
+          <li>2 failure-critical members identified and reinforced</li>
+          <li>Proposed cross-section change reduces peak stress by ~28%</li>
+        </ul>
+        <div style="margin-top:2rem">
+          <div class="detail-section-title">Tools Used</div>
+          <ul class="detail-list">
+            <li>ANSYS Mechanical (static structural)</li>
+            <li>Hand calculations — method of sections &amp; joints</li>
+            <li>Excel for tabulating and comparing results</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:2.5rem">
+      <div class="detail-section-title">Report</div>
+      <div class="detail-placeholder">
+        <strong>Full report coming soon</strong>
+        PDF write-up including FEA screenshots, hand calculation workings, and result tables will be uploaded here.
+      </div>
+    </div>
+  </section>
+
+  <section class="project-detail" id="project-heat-exchanger">
+    <button class="detail-back" onclick="closeProject('project-heat-exchanger')">← Back to Projects</button>
+    <div class="detail-header">
+      <div class="project-tags"><span class="tag">Thermodynamics</span><span class="tag">MATLAB</span><span class="tag">Modelling</span></div>
+      <h2 class="detail-title">Heat Exchanger Efficiency Model</h2>
+      <p class="detail-intro">A MATLAB model simulating counter-flow heat exchanger performance, comparing the ε-NTU and LMTD design methods across a range of operating conditions.</p>
+    </div>
+    <div class="detail-body">
+      <div>
+        <div class="detail-section-title">Overview</div>
+        <div class="detail-text">
+          <p>Written for the Thermodynamics module, this model takes user-defined inlet temperatures, flow rates, and fluid properties, then calculates outlet temperatures and heat transfer rate using both the Log Mean Temperature Difference (LMTD) and effectiveness-NTU (ε-NTU) methods.</p>
+          <p>The script sweeps across a range of NTU values (0.1 to 5) and plots effectiveness curves for counter-flow and parallel-flow configurations on the same axes — making the performance advantage of counter-flow immediately visible.</p>
+          <p>A secondary parametric study varied the hot-side flow rate from 0.01 to 0.2 kg/s and tracked how outlet temperature and effectiveness changed, producing a surface plot useful for design selection.</p>
+        </div>
+      </div>
+      <div>
+        <div class="detail-section-title">Key Outcomes</div>
+        <ul class="detail-list">
+          <li>Both LMTD and ε-NTU methods implemented and cross-validated</li>
+          <li>Counter-flow shows up to 18% higher effectiveness vs parallel at high NTU</li>
+          <li>Parametric sweep across flow rates with surface plot output</li>
+          <li>Modular functions allow easy substitution of fluid properties</li>
+          <li>Results match textbook example cases within 1%</li>
+        </ul>
+        <div style="margin-top:2rem">
+          <div class="detail-section-title">Tools Used</div>
+          <ul class="detail-list">
+            <li>MATLAB R2023b</li>
+            <li>Built-in plotting (plot, surf, legend)</li>
+            <li>Validated against Cengel &amp; Boles Thermodynamics examples</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:2.5rem">
+      <div class="detail-section-title">Code</div>
+      <div class="detail-placeholder">
+        <strong>MATLAB scripts coming soon</strong>
+        Annotated .m files for both the LMTD and ε-NTU methods, plus the parametric sweep, will be available here or on GitHub.
+      </div>
+    </div>
+  </section>
+
+  <section class="project-detail" id="project-desk-organiser">
+    <button class="detail-back" onclick="closeProject('project-desk-organiser')">← Back to Projects</button>
+    <div class="detail-header">
+      <div class="project-tags"><span class="tag">Prototyping</span><span class="tag">Design</span><span class="tag">DFM</span></div>
+      <h2 class="detail-title">Ergonomic Desk Organiser</h2>
+      <p class="detail-intro">A first-year design project applying Design for Manufacture principles, produced in SolidWorks and fabricated from laser-cut sheet material using a fully parametric model.</p>
+    </div>
+    <div class="detail-body">
+      <div>
+        <div class="detail-section-title">Overview</div>
+        <div class="detail-text">
+          <p>The brief was to design a functional desktop object that could be manufactured from flat sheet stock and assembled without adhesives or fasteners — relying only on press-fit joinery.</p>
+          <p>I chose a modular desk organiser with interlocking slot joints. The key design constraint was parametric control: every slot, tab, and panel dimension is driven by two master variables — material thickness and grid pitch — so the whole model updates correctly when either changes.</p>
+          <p>The final version was cut from 3 mm MDF on the university laser cutter. Assembly took under five minutes with no tools. A follow-up iteration explored 4 mm birch plywood, which improved rigidity noticeably.</p>
+        </div>
+      </div>
+      <div>
+        <div class="detail-section-title">Key Outcomes</div>
+        <ul class="detail-list">
+          <li>Fully parametric SolidWorks model driven by 2 master variables</li>
+          <li>Press-fit joinery — no adhesives or fasteners required</li>
+          <li>Laser-cut from 3 mm MDF; iterated to 4 mm birch ply</li>
+          <li>Tool-free assembly in under 5 minutes</li>
+          <li>DFM checklist used to reduce part count by 30% vs initial concept</li>
+        </ul>
+        <div style="margin-top:2rem">
+          <div class="detail-section-title">Tools Used</div>
+          <ul class="detail-list">
+            <li>SolidWorks (parametric part and assembly)</li>
+            <li>Laser cutter (Trotec Speedy 400)</li>
+            <li>DXF export for cutting path generation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:2.5rem">
+      <div class="detail-section-title">Drawings & Files</div>
+      <div class="detail-placeholder">
+        <strong>Technical drawings coming soon</strong>
+        Dimensioned drawings, SolidWorks files, and laser-cut DXF templates will be linked here.
+      </div>
+    </div>
+  </section>
+
+  <section class="project-detail" id="project-pendulum">
+    <button class="detail-back" onclick="closeProject('project-pendulum')">← Back to Projects</button>
+    <div class="detail-header">
+      <div class="project-tags"><span class="tag">MATLAB</span><span class="tag">Dynamics</span><span class="tag">Simulation</span></div>
+      <h2 class="detail-title">Pendulum Motion Simulation</h2>
+      <p class="detail-intro">A MATLAB simulation comparing small-angle and full nonlinear pendulum dynamics, with animated motion and a study of how drag coefficient affects energy dissipation.</p>
+    </div>
+    <div class="detail-body">
+      <div>
+        <div class="detail-section-title">Overview</div>
+        <div class="detail-text">
+          <p>This simulation was built as a self-directed extension of the Engineering Dynamics module. The goal was to explore where the small-angle approximation (sin θ ≈ θ) breaks down and how drag changes the system's behaviour.</p>
+          <p>Using MATLAB's ode45 solver, I integrated the full nonlinear equation of motion for a damped pendulum across a range of initial angles (5° to 60°) and drag coefficients. The results are plotted as phase portraits and time-series overlays between the linear and nonlinear models.</p>
+          <p>An animation was added using MATLAB's built-in animation loop, showing the pendulum bob in real time alongside the live energy plot. At initial angles above ~20°, the approximation error becomes clearly visible.</p>
+        </div>
+      </div>
+      <div>
+        <div class="detail-section-title">Key Outcomes</div>
+        <ul class="detail-list">
+          <li>Nonlinear ODE solved with ode45 across multiple initial conditions</li>
+          <li>Small-angle error exceeds 5% for θ₀ &gt; ~22°</li>
+          <li>Phase portrait plots reveal damped spiral convergence to rest</li>
+          <li>Drag coefficient sweep from 0 to 0.5 N·s/m with energy dissipation plots</li>
+          <li>Real-time animation with live energy tracking</li>
+        </ul>
+        <div style="margin-top:2rem">
+          <div class="detail-section-title">Tools Used</div>
+          <ul class="detail-list">
+            <li>MATLAB R2023b (ode45, animation, phase plots)</li>
+            <li>Symbolic Math Toolbox for equation derivation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:2.5rem">
+      <div class="detail-section-title">Simulation Files</div>
+      <div class="detail-placeholder">
+        <strong>MATLAB scripts coming soon</strong>
+        Annotated simulation code and sample output plots will be uploaded here and on GitHub.
+      </div>
+    </div>
+  </section>
+
+  <section class="project-detail" id="project-gripper">
+    <button class="detail-back" onclick="closeProject('project-gripper')">← Back to Projects</button>
+    <div class="detail-header">
+      <div class="project-tags"><span class="tag">Team Project</span><span class="tag">CAD</span><span class="tag">GD&amp;T</span></div>
+      <h2 class="detail-title">Pneumatic Gripper Mechanism</h2>
+      <p class="detail-intro">A group project to design a two-finger pneumatic gripper for handling irregular objects, achieving reliable grip across five test geometries through careful mechanical linkage design.</p>
+    </div>
+    <div class="detail-body">
+      <div>
+        <div class="detail-section-title">Overview</div>
+        <div class="detail-text">
+          <p>The team of four was tasked with designing a gripper capable of picking and placing objects of irregular geometry — a cylinder, a hex bolt, a foam cube, a PET bottle, and a flat disc. The constraint was a single-acting pneumatic actuator at 4 bar supply pressure.</p>
+          <p>My contribution was the mechanical linkage connecting the actuator piston to the two finger bodies. I designed a symmetric toggle mechanism that converts the linear actuator stroke into a parallel jaw motion, maintaining even grip force regardless of object width within a 15–60 mm range.</p>
+          <p>I also produced the full GD&T drawing set for the finger bodies and pivot pins, specifying tolerances to ensure consistent assembly and repeatable grip force. The prototype was machined from aluminium and assembled in the university workshop.</p>
+        </div>
+      </div>
+      <div>
+        <div class="detail-section-title">Key Outcomes</div>
+        <ul class="detail-list">
+          <li>Reliable grip achieved on all 5 test geometries</li>
+          <li>Operating range: 15–60 mm jaw opening</li>
+          <li>Toggle linkage maintains constant grip force across jaw range</li>
+          <li>Full GD&T drawing set produced for machining and assembly</li>
+          <li>Prototype machined from aluminium alloy 6061</li>
+          <li>Presented at end-of-module design review with poster</li>
+        </ul>
+        <div style="margin-top:2rem">
+          <div class="detail-section-title">Tools Used</div>
+          <ul class="detail-list">
+            <li>SolidWorks (parts, assembly, motion study)</li>
+            <li>GD&T drawing set to BS 8888</li>
+            <li>Workshop machining (lathe, mill, drill press)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:2.5rem">
+      <div class="detail-section-title">Poster & Drawings</div>
+      <div class="detail-placeholder">
+        <strong>Project poster &amp; drawings coming soon</strong>
+        The design review poster, SolidWorks assembly, and GD&T drawing set will be available here.
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 Dragos Paraschiv</p>
+    <p>Eindhoven, Netherlands · <a href="mailto:d.paraschiv@student.tue.nl">d.paraschiv@student.tue.nl</a></p>
+  </footer>
+
+  <script>
+    function openProject(id) {
+      // Hide all detail sections
+      document.querySelectorAll('.project-detail').forEach(el => el.classList.remove('active'));
+      // Show the target
+      const target = document.getElementById(id);
+      if (target) {
+        target.classList.add('active');
+        // Scroll to it after a brief tick so display:block has applied
+        setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+      }
+    }
+    function closeProject(id) {
+      const target = document.getElementById(id);
+      if (target) target.classList.remove('active');
+      // Scroll back to projects section
+      document.getElementById('projects').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  </script>
+</body>
+</html>
