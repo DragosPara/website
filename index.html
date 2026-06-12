@@ -52,21 +52,21 @@
     .nav-logo span { color: var(--steel); }
     nav ul { list-style: none; display: flex; gap: 2.2rem; }
     nav ul a {
-  font-size: 0.85rem; 
-  font-weight: 500; 
-  letter-spacing: 0.04em;
-  text-transform: uppercase; 
-  color: var(--muted); 
-  text-decoration: none; /* This removes the underline */
-  transition: all 0.3s ease; /* Smooths the transition */
-  padding-bottom: 4px; /* Space for our new custom line */
-  border-bottom: 2px solid transparent; /* Keeps the layout stable */
-            }
+      font-size: 0.85rem; 
+      font-weight: 500; 
+      letter-spacing: 0.04em;
+      text-transform: uppercase; 
+      color: var(--muted); 
+      text-decoration: none; 
+      display: inline-block; /* Required for transform to work */
+      transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.25s ease;
+    }
+    
     nav ul a:hover {
-  color: var(--steel); /* Changes text color to blue */
-  border-bottom: 2px solid var(--steel); /* Adds a line only on hover */
-}
-
+      color: var(--steel); 
+      transform: translateY(-3px); /* Smoothly lifts the text up */
+      text-shadow: 0 0 1px rgba(58,110,165,0.4); /* Gives a subtle bold/glow effect */
+    }
     /* ── HERO ────────────────────────────────────── */
     #hero {
       min-height: 100vh;
