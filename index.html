@@ -531,7 +531,7 @@
       </div>
     </div>
   </section>
-<!--
+
          
   <section id="projects">
     <div class="section-label">Projects</div>
@@ -606,7 +606,7 @@
 
     </div>
   </section>
--->
+
   <!-- EDUCATION & EXPERIENCE -->
   <section id="education">
     <div class="section-label">Background</div>
@@ -962,7 +962,11 @@
     /* ── ACTIVE NAV LINK ───────────────────────── */
     const navLinks = document.querySelectorAll('nav ul a');
     const sections = [...navLinks].map(link => document.querySelector(link.getAttribute('href')));
+    let suppressNavObserver = false;
+    let suppressTimeout;
+
     const navObserver = new IntersectionObserver((entries) => {
+      if (suppressNavObserver) return;
       entries.forEach(entry => {
         const link = document.querySelector(`nav ul a[href="#${entry.target.id}"]`);
         if (!link) return;
@@ -973,6 +977,19 @@
       });
     }, { rootMargin: '-45% 0px -45% 0px' });
     sections.forEach(sec => { if (sec) navObserver.observe(sec); });
+
+    // When a nav link is clicked, immediately mark it active and ignore
+    // the observer until the smooth-scroll has finished, so intermediate
+    // sections passing through the viewport don't flash as active.
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+        suppressNavObserver = true;
+        clearTimeout(suppressTimeout);
+        suppressTimeout = setTimeout(() => { suppressNavObserver = false; }, 1000);
+      });
+    });
 
     /* ── SCROLL-REVEAL ─────────────────────────── */
     const revealObserver = new IntersectionObserver((entries) => {
