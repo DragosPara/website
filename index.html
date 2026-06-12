@@ -327,6 +327,26 @@
       text-align: center; color: var(--muted); font-size: 0.88rem; line-height: 1.6;
     }
     .detail-placeholder strong { display: block; margin-bottom: 0.4rem; font-weight: 600; color: var(--navy); }
+
+.reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), 
+                  transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+      will-change: opacity, transform; /* Optimizes graphics performance */
+    }
+
+    /* Target elements when they enter the viewport */
+    .reveal.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Sequential delay for lists (like skills or timeline items) */
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
     @media (max-width: 768px) {
       .detail-body { grid-template-columns: 1fr; gap: 2rem; }
     }
@@ -444,6 +464,7 @@
 
   <!-- ABOUT -->
   <section id="about">
+    <section id="about" class="reveal"></section>
     <div class="section-label">About Me</div>
     <h2 class="section-title">Engineering is how<br>I think about everything.</h2>
     <div class="about-grid">
@@ -904,6 +925,29 @@
       // Scroll back to projects section
       document.getElementById('projects').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+
+// Reveal on Scroll Engine
+    document.addEventListener("DOMContentLoaded", function() {
+      const revealElements = document.querySelectorAll('.reveal');
+
+      const observerOptions = {
+        root: null, // Uses the browser viewport
+        rootMargin: "0px 0px -10% 0px", // Triggers slightly before the element hits the bottom frame
+        threshold: 0.15 // Triggers when 15% of the element is visible
+      };
+
+      const io = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            observer.unobserve(entry.target); // Stops watching once animated
+          }
+        });
+      }, observerOptions);
+
+      revealElements.forEach(el => io.observe(el));
+    });
+
   </script>
 </body>
 </html>
