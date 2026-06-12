@@ -86,6 +86,13 @@
       transform: translateY(-3px); /* Smoothly lifts the text up */
       text-shadow: 0 0 1px rgba(58,110,165,0.4); /* Gives a subtle bold/glow effect */
     }
+    nav ul a.active { color: var(--amber); }
+    nav ul a.active::after {
+      content: ''; display: block; height: 1.5px; background: var(--amber);
+      margin-top: 3px; border-radius: 1px;
+      animation: underlineGrow 0.3s ease-out both;
+    }
+    @keyframes underlineGrow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
     /* ── THEME TOGGLE ────────────────────────────── */
     .theme-toggle {
@@ -193,6 +200,32 @@
       from { opacity: 0; transform: translateY(24px); }
       to   { opacity: 1; transform: translateY(0); }
     }
+
+    /* ── SCROLL-REVEAL UTILITIES ──────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(0.25,0.46,0.45,0.94),
+                  transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    .reveal-stagger > * {
+      opacity: 0; transform: translateY(22px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal-stagger.visible > * { opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(1)  { transition-delay: 0.00s; }
+    .reveal-stagger.visible > *:nth-child(2)  { transition-delay: 0.04s; }
+    .reveal-stagger.visible > *:nth-child(3)  { transition-delay: 0.08s; }
+    .reveal-stagger.visible > *:nth-child(4)  { transition-delay: 0.12s; }
+    .reveal-stagger.visible > *:nth-child(5)  { transition-delay: 0.16s; }
+    .reveal-stagger.visible > *:nth-child(6)  { transition-delay: 0.20s; }
+    .reveal-stagger.visible > *:nth-child(7)  { transition-delay: 0.24s; }
+    .reveal-stagger.visible > *:nth-child(8)  { transition-delay: 0.28s; }
+    .reveal-stagger.visible > *:nth-child(9)  { transition-delay: 0.32s; }
+    .reveal-stagger.visible > *:nth-child(10) { transition-delay: 0.36s; }
+    .reveal-stagger.visible > *:nth-child(11) { transition-delay: 0.40s; }
+    .reveal-stagger.visible > *:nth-child(12) { transition-delay: 0.44s; }
 
     /* ── SECTIONS SHARED ────────────────────────── */
     section { padding: 6rem 5vw; }
@@ -470,7 +503,7 @@
     <div class="section-label">About Me</div>
     <h2 class="section-title">Engineering is how<br>I think about everything.</h2>
     <div class="about-grid">
-      <div class="about-text">
+      <div class="about-text reveal">
         <p>
           I'm currently pursuing a degree in Mechanical Engineering, driven by a deep curiosity about how things work and how they can be made better. Whether it's analysing stress in a structure or sketching up a prototype, I approach every challenge with precision and creativity.
         </p>
@@ -481,9 +514,9 @@
           I'm actively looking for internship opportunities and collaborative projects where I can apply my skills and grow as an engineer.
         </p>
       </div>
-      <div>
+      <div class="reveal">
         <p class="skills-heading">Technical Skills</p>
-        <div class="skills-grid">
+        <div class="skills-grid reveal-stagger">
           <div class="skill-tag">SolidWorks CAD</div>
           <div class="skill-tag">AutoCAD</div>
           <div class="skill-tag">MATLAB</div>
@@ -503,9 +536,9 @@
   <section id="projects">
     <div class="section-label">Projects</div>
     <h2 class="section-title">What I've been building.</h2>
-    <div class="projects-grid">
+    <div class="projects-grid reveal-stagger">
 
-      <div class="project-card">
+      <div class="project-card reveal">
         <div class="project-icon">
            Gear icon 
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
@@ -516,7 +549,7 @@
         <a class="project-link" href="#project-bicycle-stem" onclick="openProject('project-bicycle-stem')">View Design Files ↗</a>
       </div>
 
-      <div class="project-card">
+      <div class="project-card reveal">
         <div class="project-icon">
            Chart/structure icon 
           <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
@@ -527,7 +560,7 @@
         <a class="project-link" href="#project-truss-bridge" onclick="openProject('project-truss-bridge')">View Report ↗</a>
       </div>
 
-      <div class="project-card">
+      <div class="project-card reveal">
         <div class="project-icon">
            Thermometer icon 
           <svg viewBox="0 0 24 24"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
@@ -538,7 +571,7 @@
         <a class="project-link" href="#project-heat-exchanger" onclick="openProject('project-heat-exchanger')">View Code ↗</a>
       </div>
 
-      <div class="project-card">
+      <div class="project-card reveal">
         <div class="project-icon">
            Box icon 
           <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
@@ -549,7 +582,7 @@
         <a class="project-link" href="#project-desk-organiser" onclick="openProject('project-desk-organiser')">View Drawings ↗</a>
       </div>
 
-      <div class="project-card">
+      <div class="project-card reveal">
         <div class="project-icon">
            Activity icon 
           <svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
@@ -560,7 +593,7 @@
         <a class="project-link" href="#project-pendulum" onclick="openProject('project-pendulum')">View Simulation ↗</a>
       </div>
 
-      <div class="project-card">
+      <div class="project-card reveal">
         <div class="project-icon">
            Layers icon 
           <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
@@ -580,7 +613,7 @@
     <h2 class="section-title">Education &amp; Experience</h2>
     <div class="timeline">
 
-      <div class="timeline-item">
+      <div class="timeline-item reveal">
         <div class="timeline-year">2024 – Present</div>
         <div class="timeline-body">
           <div class="timeline-role">BEng Mechanical Engineering</div>
@@ -589,7 +622,7 @@
         </div>
       </div>
 
-      <div class="timeline-item">
+      <div class="timeline-item reveal">
         <div class="timeline-year">Summer 2024</div>
         <div class="timeline-body">
           <div class="timeline-role">Workshop Volunteer</div>
@@ -598,7 +631,7 @@
         </div>
       </div>
 
-      <div class="timeline-item">
+      <div class="timeline-item reveal">
         <div class="timeline-year">2022 – 2024</div>
         <div class="timeline-body">
           <div class="timeline-role">Secondary Education — STEM Track</div>
@@ -612,7 +645,7 @@
 
   <!-- CONTACT -->
   <section id="contact">
-    <div class="contact-inner">
+    <div class="contact-inner reveal">
       <div class="section-label">Contact</div>
       <h2 class="section-title">Let's work together.</h2>
       <p class="contact-sub">
@@ -904,7 +937,7 @@
   </section>
 
   <!-- FOOTER -->
-  <footer>
+  <footer class="reveal">
     <p>© 2026 Dragos Paraschiv</p>
     <p>Eindhoven, Netherlands · <a href="mailto:d.paraschiv@student.tue.nl">d.paraschiv@student.tue.nl</a></p>
   </footer>
@@ -925,6 +958,32 @@
         localStorage.setItem('theme', 'dark');
       }
     });
+
+    /* ── ACTIVE NAV LINK ───────────────────────── */
+    const navLinks = document.querySelectorAll('nav ul a');
+    const sections = [...navLinks].map(link => document.querySelector(link.getAttribute('href')));
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const link = document.querySelector(`nav ul a[href="#${entry.target.id}"]`);
+        if (!link) return;
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-45% 0px -45% 0px' });
+    sections.forEach(sec => { if (sec) navObserver.observe(sec); });
+
+    /* ── SCROLL-REVEAL ─────────────────────────── */
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => revealObserver.observe(el));
 
     function openProject(id) {
       // Hide all detail sections
