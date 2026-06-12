@@ -58,14 +58,31 @@
       text-transform: uppercase; 
       color: var(--muted); 
       text-decoration: none; 
-      display: inline-block; /* Required for transform to work */
-      transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.25s ease;
+      position: relative; /* Setup for the absolute line pseudo-element */
+      padding-bottom: 4px;
+      transition: color 0.3s ease;
     }
     
     nav ul a:hover {
-      color: var(--steel); 
-      transform: translateY(-3px); /* Smoothly lifts the text up */
-      text-shadow: 0 0 1px rgba(58,110,165,0.4); /* Gives a subtle bold/glow effect */
+      color: var(--navy); 
+    }
+
+    /* Create a hidden underline that starts at 0 width */
+    nav ul a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background-color: var(--steel);
+      transition: width 0.3s ease, left 0.3s ease;
+    }
+
+    /* Expand the line outwards from the center on hover */
+    nav ul a:hover::after {
+      width: 100%;
+      left: 0;
     }
     /* ── HERO ────────────────────────────────────── */
     #hero {
