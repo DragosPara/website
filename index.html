@@ -1008,21 +1008,28 @@
     document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => revealObserver.observe(el));
 
     function openProject(id) {
-      // Hide all detail sections
       document.querySelectorAll('.project-detail').forEach(el => el.classList.remove('active'));
-      // Show the target
       const target = document.getElementById(id);
       if (target) {
         target.classList.add('active');
-        // Scroll to it after a brief tick so display:block has applied
+        // Suppress nav observer and clear active state while a project detail is open
+        suppressNavObserver = true;
+        clearTimeout(suppressTimeout);
+        navLinks.forEach(l => l.classList.remove('active'));
         setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
       }
     }
     function closeProject(id) {
       const target = document.getElementById(id);
       if (target) target.classList.remove('active');
-      // Scroll back to projects section
+      // Re-enable observer after scroll settles, then mark Projects as active
+      suppressNavObserver = true;
+      clearTimeout(suppressTimeout);
+      navLinks.forEach(l => l.classList.remove('active'));
+      const projectsLink = document.querySelector('nav ul a[href="#projects"]');
+      if (projectsLink) projectsLink.classList.add('active');
       document.getElementById('projects').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      suppressTimeout = setTimeout(() => { suppressNavObserver = false; }, 1200);
     }
   </script>
 </body>
