@@ -26,7 +26,7 @@
     }
 
     /* ── DARK MODE ───────────────────────────────── */
-    [data-theme="dark"] {
+    [data-theme="dark"] {-
       --bg:       #0D1B2A;
       --navy:     #F2F1ED;
       --steel:    #6FA8DC;
@@ -285,6 +285,65 @@
       font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: var(--navy);
     }
 
+    /* ── LANGUAGES ACCORDION ─────────────────────── */
+    .languages-toggle {
+      display: inline-flex; align-items: center; gap: 0.55rem;
+      background: none; border: 1px solid var(--border);
+      border-radius: 3px; padding: 0.55rem 0.9rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.82rem; font-weight: 600; color: var(--navy);
+      cursor: pointer; margin-top: 1.4rem;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .languages-toggle:hover { border-color: var(--steel); color: var(--steel); }
+    .languages-toggle svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2.2; transition: transform 0.3s ease; }
+    .languages-toggle.open { border-color: var(--steel); color: var(--steel); background: rgba(58,110,165,0.06); }
+    .languages-toggle.open svg { transform: rotate(180deg); }
+
+    .languages-panel {
+      overflow: hidden; max-height: 0;
+      transition: max-height 0.4s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.3s ease;
+      opacity: 0;
+    }
+    .languages-panel.open { max-height: 320px; opacity: 1; }
+
+    .lang-list {
+      display: flex; flex-direction: column; gap: 0.75rem;
+      margin-top: 1rem; padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    .lang-item { display: flex; flex-direction: column; gap: 0.3rem; }
+    .lang-row {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .lang-name {
+      font-size: 0.85rem; font-weight: 600; color: var(--navy);
+      display: flex; align-items: center; gap: 0.45rem;
+    }
+    .lang-cert {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.05em;
+      text-transform: uppercase; color: var(--steel);
+      background: rgba(58,110,165,0.1);
+      padding: 0.15rem 0.45rem; border-radius: 2px;
+    }
+    .lang-cert.amber { color: var(--amber); background: rgba(232,162,23,0.13); }
+    .lang-bar-track {
+      height: 3px; background: var(--border); border-radius: 2px;
+      overflow: hidden;
+    }
+    .lang-bar-fill {
+      height: 100%; border-radius: 2px;
+      background: var(--steel);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .lang-bar-fill.amber { background: var(--amber); }
+    .languages-panel.open .lang-bar-fill { transform: scaleX(1); }
+    .lang-bar-fill:nth-child(1) { transition-delay: 0.05s; }
+    .lang-bar-fill:nth-child(2) { transition-delay: 0.1s; }
+    .lang-bar-fill:nth-child(3) { transition-delay: 0.15s; }
+    .lang-bar-fill:nth-child(4) { transition-delay: 0.2s; }
+
     /* ── PROJECTS ────────────────────────────────── */
     .projects-grid {
       display: grid;
@@ -539,6 +598,57 @@
           <div class="skill-tag">Thermodynamics</div>
           <div class="skill-tag">Technical Drawing</div>
           <div class="skill-tag">Python (basics)</div>
+        </div>
+
+        <!-- Languages accordion -->
+        <button class="languages-toggle" id="langToggle" aria-expanded="false">
+          <svg viewBox="0 0 24 24"><path d="M5 8l7 8 7-8"/></svg>
+          Languages
+        </button>
+        <div class="languages-panel" id="langPanel" aria-hidden="true">
+          <div class="lang-list">
+
+            <div class="lang-item">
+              <div class="lang-row">
+                <span class="lang-name">Romanian</span>
+                <span class="lang-cert">Native</span>
+              </div>
+              <div class="lang-bar-track">
+                <div class="lang-bar-fill" style="width:100%"></div>
+              </div>
+            </div>
+
+            <div class="lang-item">
+              <div class="lang-row">
+                <span class="lang-name">English</span>
+                <span class="lang-cert amber">TOEFL C1</span>
+              </div>
+              <div class="lang-bar-track">
+                <div class="lang-bar-fill amber" style="width:88%"></div>
+              </div>
+            </div>
+
+            <div class="lang-item">
+              <div class="lang-row">
+                <span class="lang-name">French</span>
+                <span class="lang-cert amber">DALF C1</span>
+              </div>
+              <div class="lang-bar-track">
+                <div class="lang-bar-fill amber" style="width:85%"></div>
+              </div>
+            </div>
+
+            <div class="lang-item">
+              <div class="lang-row">
+                <span class="lang-name">Dutch</span>
+                <span class="lang-cert">A1</span>
+              </div>
+              <div class="lang-bar-track">
+                <div class="lang-bar-fill" style="width:14%"></div>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
@@ -1006,6 +1116,16 @@
       });
     }, { threshold: 0.15 });
     document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => revealObserver.observe(el));
+
+    /* ── LANGUAGES ACCORDION ───────────────────── */
+    const langToggle = document.getElementById('langToggle');
+    const langPanel  = document.getElementById('langPanel');
+    langToggle.addEventListener('click', () => {
+      const isOpen = langPanel.classList.toggle('open');
+      langToggle.classList.toggle('open', isOpen);
+      langToggle.setAttribute('aria-expanded', isOpen);
+      langPanel.setAttribute('aria-hidden', !isOpen);
+    });
 
     function openProject(id) {
       document.querySelectorAll('.project-detail').forEach(el => el.classList.remove('active'));
