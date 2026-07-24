@@ -77,14 +77,14 @@
       text-transform: uppercase; 
       color: var(--muted); 
       text-decoration: none; 
-      display: inline-block; /* Required for transform to work */
+      display: inline-block; 
       transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.25s ease;
     }
     
     nav ul a:hover {
       color: var(--steel); 
-      transform: translateY(-3px); /* Smoothly lifts the text up */
-      text-shadow: 0 0 1px rgba(58,110,165,0.4); /* Gives a subtle bold/glow effect */
+      transform: translateY(-3px); 
+      text-shadow: 0 0 1px rgba(58,110,165,0.4); 
     }
     nav ul a.active { color: var(--amber); }
     nav ul a.active::after {
@@ -108,6 +108,7 @@
     .theme-toggle .icon-sun { display: none; }
     [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
     [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+
     /* ── HERO ────────────────────────────────────── */
     #hero {
       min-height: 100vh;
@@ -360,7 +361,7 @@
       transform: translateY(-4px);
       border-color: var(--steel);
       box-shadow: 0 8px 28px rgba(13,27,42,0.09);
-      transition-delay: 0s !important; /* Instantly removes the stagger delay on hover */
+      transition-delay: 0s !important; 
     }
     .project-icon {
       width: 44px; height: 44px; border-radius: 4px;
@@ -409,7 +410,7 @@
       border-color: var(--steel);
     }
 
-    /* ── LIGHTBOX (IMAGE ZOOM) ───────────────────── */
+    /* ── LIGHTBOX (IMAGE ZOOM & PAN) ─────────────── */
     .lightbox {
       display: none;
       position: fixed;
@@ -427,7 +428,10 @@
       max-height: 90vh;
       border-radius: 6px;
       box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-      transition: transform 0.1s ease-out;
+      cursor: grab; /* Shows it can be dragged */
+    }
+    .lightbox-content:active {
+      cursor: grabbing;
     }
     .lightbox-close {
       position: absolute;
@@ -442,10 +446,6 @@
     }
     .lightbox-close:hover {
       color: var(--steel);
-    }
-    @keyframes zoomIn {
-      from { transform: scale(0.8); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
     }
 
     /* ── PROJECT DETAIL SECTIONS ────────────────── */
@@ -1134,9 +1134,9 @@
   </footer>
 
   <!-- LIGHTBOX -->
-  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-    <span class="lightbox-close">&times;</span>
-    <img class="lightbox-content" id="lightbox-img">
+  <div id="lightbox" class="lightbox">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <img class="lightbox-content" id="lightbox-img" draggable="false">
   </div>
 
   <script>
@@ -1175,9 +1175,6 @@
     }, { rootMargin: '-45% 0px -45% 0px' });
     sections.forEach(sec => { if (sec) navObserver.observe(sec); });
 
-    // When a nav link is clicked, immediately mark it active and ignore
-    // the observer until the smooth-scroll has finished, so intermediate
-    // sections passing through the viewport don't flash as active.
     navLinks.forEach(link => {
       link.addEventListener('click', () => {
         navLinks.forEach(l => l.classList.remove('active'));
@@ -1214,7 +1211,6 @@
       const target = document.getElementById(id);
       if (target) {
         target.classList.add('active');
-        // Suppress nav observer and clear active state while a project detail is open
         suppressNavObserver = true;
         clearTimeout(suppressTimeout);
         navLinks.forEach(l => l.classList.remove('active'));
@@ -1224,7 +1220,6 @@
     function closeProject(id) {
       const target = document.getElementById(id);
       if (target) target.classList.remove('active');
-      // Re-enable observer after scroll settles, then mark Projects as active
       suppressNavObserver = true;
       clearTimeout(suppressTimeout);
       navLinks.forEach(l => l.classList.remove('active'));
@@ -1234,16 +1229,23 @@
       suppressTimeout = setTimeout(() => { suppressNavObserver = false; }, 1200);
     }
     
-    /* ── LIGHTBOX FUNCTIONS & ZOOM ──────────────────────── */
+    /* ── LIGHTBOX FUNCTIONS (ZOOM & PAN) ─────────── */
     let currentScale = 1;
+    let isDragging = false;
+    let startX, startY;
+    let translateX = 0, translateY = 0;
     const lightboxImg = document.getElementById('lightbox-img');
+
+    function updateTransform() {
+      lightboxImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentScale})`;
+    }
 
     function openLightbox(imageSrc) {
       const lightbox = document.getElementById('lightbox');
-      
-      // Reset scale every time a new image is opened
       currentScale = 1; 
-      lightboxImg.style.transform = `scale(${currentScale})`;
+      translateX = 0;
+      translateY = 0;
+      updateTransform();
       
       lightbox.style.display = 'flex';
       lightboxImg.src = imageSrc;
@@ -1251,21 +1253,50 @@
 
     function closeLightbox() {
       document.getElementById('lightbox').style.display = 'none';
+      isDragging = false;
     }
 
-    // Add scroll-to-zoom functionality
+    // Scroll to zoom
     lightboxImg.addEventListener('wheel', (e) => {
-      e.preventDefault(); // Prevents the background page from scrolling
-      
+      e.preventDefault(); 
       if (e.deltaY < 0) {
-        currentScale += 0.15; // Scroll up = zoom in
+        currentScale += 0.15; 
       } else {
-        currentScale -= 0.15; // Scroll down = zoom out
+        currentScale -= 0.15; 
       }
-      
-      // Limit the zoom so it doesn't get too small or too large
       currentScale = Math.max(0.5, Math.min(currentScale, 4));
-      lightboxImg.style.transform = `scale(${currentScale})`;
+      updateTransform();
+    });
+
+    // Mouse drag logic
+    lightboxImg.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      isDragging = true;
+      startX = e.clientX - translateX;
+      startY = e.clientY - translateY;
+      lightboxImg.style.cursor = 'grabbing';
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      translateX = e.clientX - startX;
+      translateY = e.clientY - startY;
+      updateTransform();
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (isDragging) {
+        isDragging = false;
+        lightboxImg.style.cursor = 'grab';
+      }
+    });
+
+    // Close lightbox if clicking outside the image
+    document.getElementById('lightbox').addEventListener('mousedown', (e) => {
+      if (e.target === document.getElementById('lightbox')) {
+        closeLightbox();
+      }
     });
   </script>
 </body>
