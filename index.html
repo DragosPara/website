@@ -718,8 +718,24 @@
 
       <div class="project-card reveal">
         <div class="project-icon">
-          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        </div>
+<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Base and Pedestal -->
+  <path d="M5 21h14" />
+  <path d="M12 21v-4" />
+  <!-- Shoulder Joint -->
+  <circle cx="12" cy="17" r="1" />
+  <path d="M12 17L7 10" />
+  <!-- Elbow Joint -->
+  <circle cx="7" cy="10" r="1" />
+  <path d="M7 10l7-4" />
+  <!-- Wrist Joint -->
+  <circle cx="14" cy="6" r="1" />
+  <path d="M14 6h5" />
+  <!-- Gripper -->
+  <path d="M19 4v4" />
+  <path d="M19 4h2" />
+  <path d="M19 8h2" />
+</svg>        </div>
         <div class="project-tags"><span class="tag">FEA</span><span class="tag">ANSYS</span></div>
         <h3 class="project-title">Truss Bridge Structural Analysis</h3>
         <p class="project-desc">Performed static analysis on a Pratt truss bridge model using ANSYS. Compared analytical hand calculations to simulated results, identifying failure points under distributed loading and proposing cross-section reinforcements.</p>
