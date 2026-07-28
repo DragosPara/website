@@ -738,7 +738,7 @@
 </svg>        </div>
         <div class="project-tags"><span class="tag">Simulink</span><span class="tag">Image Processing</span><span class="tag">FRF & Control</span><span class="tag">Stateflow</span></div>
         <h3 class="project-title">Control of a flexible robot system</h3>
-        <p class="project-desc">Performed static analysis on a Pratt truss bridge model using ANSYS. Compared analytical hand calculations to simulated results, identifying failure points under distributed loading and proposing cross-section reinforcements.</p>
+        <p class="project-desc">Developed a MATLAB/Simulink control system for a flexible robot arm setup with conveyor belt and camera-based object detection. Implemented feedforward and feedback control loops across the robot's R, X, and Z axes, using Stateflow to manage the pick-and-place sequence. Tuned controllers based on frequency response measurements (FRF) taken via RTScope, and integrated a vacuum gripper and color-based object detection to pick objects off a moving conveyor and place them at target coordinates.</p>
         <a class="project-link" href="#project-flexible-robot" onclick="openProject('project-flexible-robot')">See more ↗</a>
       </div>
 
@@ -822,7 +822,7 @@
         <div class="timeline-body">
           <div class="timeline-role">Albert Heijn Employee</div>
           <div class="timeline-org">Eindhoven, The Netherlands</div>
-          <div class="timeline-desc">Provide all-around support for daily store operations working 20 hours per week alongside my studies.</div>
+          <div class="timeline-desc">Provide all-around support for daily store operations working 20 hours per week on average alongside my studies.</div>
         </div>
       </div>
 
@@ -937,18 +937,19 @@
       <div>
         <div class="detail-section-title">Key Outcomes</div>
         <ul class="detail-list">
-          <li>FEA model with 23 members and 13 nodes</li>
-          <li>Distributed load of 5 kN/m across upper chord</li>
-          <li>Hand vs simulation agreement within 4% across all members</li>
-          <li>2 failure-critical members identified and reinforced</li>
-          <li>Proposed cross-section change reduces peak stress by ~28%</li>
+          <li>MATLAB/Simulink control system running on a Raspberry Pi via SPERTE/EtherCAT interface</li>
+          <li>Feedback + feedforward control implemented across 3 axes (R, X, Z)</li>
+          <li>FRF measurements taken via RTScope used to tune controller gains and validate stability</li>
+          <li>Successful pick-and-place cycle: object detected on conveyor, picked up via vacuum gripper, placed at target coordinate</li>
+          <li>3x3 grid of different colored objects placed based on provided image</li>
         </ul>
         <div style="margin-top:2rem">
           <div class="detail-section-title">Tools Used</div>
           <ul class="detail-list">
-            <li>ANSYS Mechanical (static structural)</li>
-            <li>Hand calculations — method of sections &amp; joints</li>
-            <li>Excel for tabulating and comparing results</li>
+            <li>MATLAB & Simulink (SPERTE toolbox, Stateflow)</li>
+            <li>Raspberry Pi (real-time code deployment)</li>
+            <li>RTScope for real-time FRF measurement and controller tuning</li>
+            <li>Quintic polynomial trajectory generation for smooth motion profiles</li>
           </ul>
         </div>
       </div>
