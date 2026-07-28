@@ -929,9 +929,9 @@
       <div>
         <div class="detail-section-title">Overview</div>
         <div class="detail-text">
-          <p>This project was completed as part of the Mechanics of Materials module. The brief was to model a Pratt truss under a distributed pedestrian load of 5 kN/m and evaluate stress distribution, nodal deflections, and likely failure modes.</p>
-          <p>I built the truss geometry in ANSYS Mechanical using beam elements, applied pinned-roller boundary conditions, and ran a linear static analysis. Results were then compared to analytical calculations done by hand using the method of sections.</p>
-          <p>The simulation and hand calculations agreed within 4% for all member forces — the discrepancy was traced to joint eccentricity in the FE model. Two lower chord members near mid-span were identified as critical; I proposed increasing their cross-section from 50×50 mm to 60×60 mm hollow section.</p>
+          <p>This project was part of the Control of a Flexible Robot System course, where our team of about 5 students was given a real robot arm setup with a conveyor belt and camera system, and had to take it through a full control design cycle ourselves — from modeling to feedback design to final performance testing.</p>
+          <p>My main focus within the team was on the controller design and building out the Stateflow logic from scratch, since the pick-and-place sequence needed to reliably coordinate the robot's motion, the vacuum gripper, and the camera detection without any of it clashing. I spent a lot of time in Simulink tuning the feedback and feedforward controllers using FRF measurements, then iterating on the Stateflow chart to handle the different states of the task cleanly.</p>
+          <p>It was a good opportunity to take control theory from lectures and actually see it work on hardware, dealing with real delays, noise, and timing issues that don't show up in a simulation. By the end, we had the robot reliably picking objects off the moving conveyor and placing them at target coordinates.</p>
         </div>
       </div>
       <div>
