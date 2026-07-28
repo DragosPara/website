@@ -396,7 +396,8 @@
       gap: 1rem;
       margin-top: 1rem;
     }
-    .project-gallery img {
+    .project-gallery img,
+    .project-gallery video {
       width: 100%;
       height: 220px;
       object-fit: cover;
@@ -405,7 +406,8 @@
       cursor: zoom-in;
       transition: transform 0.2s, border-color 0.2s;
     }
-    .project-gallery img:hover {
+    .project-gallery img:hover,
+    .project-gallery video:hover {
       transform: translateY(-2px);
       border-color: var(--steel);
     }
@@ -963,8 +965,7 @@
 
 
     <!-- Videos: use video tag with controls, click opens lightbox with video -->
-    <video src="images/video_robott.mp4" muted onclick="openLightbox(this.src, 'video')"></video>
-  </div>
+<video src="images/video_robott.mp4" poster="images/video_thumbnail.jpg" muted onclick="openLightbox(this.src, 'video')" style="width:100%; height:100%; object-fit:cover;"></video>  </div>
 </div>
   </section>
 
