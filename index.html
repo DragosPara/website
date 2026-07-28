@@ -954,13 +954,18 @@
         </div>
       </div>
     </div>
-    <div style="margin-top:2.5rem">
-      <div class="detail-section-title">Report</div>
-      <div class="detail-placeholder">
-        <strong>Full report coming soon</strong>
-        PDF write-up including FEA screenshots, hand calculation workings, and result tables will be uploaded here.
-      </div>
-    </div>
+<div style="margin-top:2.5rem">
+  <div class="detail-section-title">Gallery</div>
+  <div class="project-gallery">
+    <!-- Images: replace src with your actual paths -->
+    <img src="images/robot.PNG" alt="Robot Arm Overview" onclick="openLightbox(this.src)">
+    <img src="images/matlab.JPG" alt="Robot Arm " onclick="openLightbox(this.src)">
+
+
+    <!-- Videos: use video tag with controls, click opens lightbox with video -->
+    <video src="images/video_robott.mp4" muted onclick="openLightbox(this.src, 'video')"></video>
+  </div>
+</div>
   </section>
 
   <section class="project-detail" id="project-heat-exchanger">
