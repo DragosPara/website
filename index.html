@@ -784,10 +784,10 @@
   <path d="M16 19l2 2" />
 </svg>
         </div>
-        <div class="project-tags"><span class="tag">ELECTROMAGNETICS</span><span class="tag">Actuator Design</span><span class="tag">FEMM</span></div>
+        <div class="project-tags"><span class="tag">MECHATRONICS</span><span class="tag">ELECTROMAGNETICS</span><span class="tag">Actuator Design</span><span class="tag">FEMM</span></div>
         <h3 class="project-title">AFM Voice Coil Actuator Design</h3>
         <p class="project-desc">Designed and simulated a voice coil actuator using FEMM, focusing on electromagnetic field analysis and force generation. Optimized the actuator geometry for improved performance and reliability.</p>
-        <a class="project-link" href="#project-afm-actuator" onclick="openProject('project-afm-actuator')">View Design ↗</a>
+        <a class="project-link" href="#project-afm-actuator" onclick="openProject('project-afm-actuator')">See more ↗</a>
       </div>
 
       <div class="project-card reveal">
@@ -938,7 +938,7 @@
         <div style="margin-top:2rem">
           <div class="detail-section-title">Tools Used</div>
           <ul class="detail-list">
-            <li>Siemens NX (part modelling, assembly, Simulation)</li>
+            <li>Siemens NX (part modelling, assembly, simulation)</li>
             <li>FDM 3D printing — PLA</li>
             <li>Arduino for coding</li>
             <li>Digital callipers for tolerance validation</li>
@@ -1019,31 +1019,39 @@
     <button class="detail-back" onclick="closeProject('project-afm-actuator')">← Back to Projects</button>
     <div class="detail-header">
       <div class="project-tags">
+        <span class="tag">MECHATRONICS</span>
         <span class="tag">ELECTROMAGNETICS</span>
         <span class="tag">Actuator Design</span>
         <span class="tag">FEMM</span>
       </div>
       <h2 class="detail-title">AFM Voice Coil Actuator Design</h2>
-      <p class="detail-intro">Designed and simulated a voice coil actuator using FEMM, focusing on electromagnetic field analysis and force generation. Optimized the actuator geometry for improved performance and reliability.</p>
+      <p class="detail-intro">Designed and simulated a voice coil actuator using FEMM, focusing on magnetic field analysis and force generation. Optimized the actuator geometry and materials for improved performance and reliability.</p>
     </div>
     <div class="detail-body">
       <div>
         <div class="detail-section-title">Overview</div>
         <div class="detail-text">
-          <p>Add your detailed project description here. Explain the problem, your design process, and the final solution.</p>
+          <p>This project was part of the 4CC10 Mechatronic Design course, where our team of six students was tasked with building a Coin Scanning Atomic Force Microscope (AFM). The goal was to create a safe, tabletop-compatible educational device for classroom demonstrations that could perform a large-scale demonstration of the AFM principle in contact tapping mode to image the 2.5D topography of a 1 Euro coin.</p>
+          <p>As the Magnetics Designer for the team, my main focus was designing and simulating the custom electromagnetic actuator needed for the precise Z-axis tapping motion. I designed an underhung voice coil actuator (NCC topology) to ensure a uniform force across the full stroke and a linear force-current relationship. The design utilized a 1018 Steel housing for its high permeability, an N45 NdFeB disc magnet, and a 32 AWG copper coil with 240 turns to keep the moving mass low. I spent a significant amount of time in FEMM simulating the magnetic fields, optimizing the geometry to achieve an average magnetic flux density of 0.172 T in the air gap and a Lorentz force of 0.208 N.  </p>
+          <p>It was a great opportunity to apply electromagnetic theory to a real-world mechatronic setup, ensuring the actuator could operate safely within a 0.08 W power budget and avoid magnetic saturation. By the end of the design cycle, this voice coil actuator was fully integrated to drive the cantilever tip at a 43.4 Hz operating frequency, working in tandem with the XY macro stage and laser deflection sensors to reliably track and map the coin's surface.  </p>
+
+
         </div>
       </div>
       <div>
         <div class="detail-section-title">Key Outcomes</div>
         <ul class="detail-list">
-          <li>Outcome 1</li>
-          <li>Outcome 2</li>
+          <li>0.208 N Lorentz force  </li>
+          <li>0.08 W power consumption</li>
+          <li>30 g moving mass  </li>
+          <li>0.172 T air-gap flux</li>  
         </ul>
         <div style="margin-top:2rem">
           <div class="detail-section-title">Tools Used</div>
           <ul class="detail-list">
             <li>FEMM</li>
-            <li>List other tools here</li>
+            <li>MATLAB  </li>
+            <li>Siemens NX</li>
           </ul>
         </div>
       </div>
