@@ -1402,6 +1402,13 @@
           <p>The scene starts with three randomly placed boxes. I can choose three or six boxes, drag the boxes or goal, add barriers, and ask the planner to build a pyramid, row or tower. The app checks each grasp and placement, with pause, step and replay controls for inspecting the sequence.</p>
           <p>AI helped write and refine parts of the MATLAB code. I checked the resulting behaviour with simulator runs and automated tests.</p>
         </div>
+        <div style="margin-top:2rem">
+          <div class="detail-section-title">Principles Used</div>
+          <div class="detail-text">
+            <p>Forward kinematics calculates the tool position from the joint angles. Analytical inverse kinematics works the other way: it finds possible base, shoulder and elbow angles for an XYZ target, then checks reachability and joint limits before the arm moves.</p>
+            <p>The joints follow smooth trajectories sized around speed and acceleration limits. For each box, the planner checks the approach, pickup, lift, transfer, placement and retreat against the scene. It can route around a barrier, and contact checks confirm the grasp and final position. This is a kinematic model; motor torque and structural flexibility are not simulated.</p>
+          </div>
+        </div>
       </div>
       <div>
         <div class="detail-section-title">Key Outcomes</div>
@@ -1411,6 +1418,15 @@
           <li>Verified three- or six-box pick-and-place into a pyramid, row or tower</li>
           <li>Playback controls and on-screen suction and placement feedback</li>
         </ul>
+        <div style="margin-top:2rem">
+          <div class="detail-section-title">What Can Be Changed</div>
+          <ul class="detail-list">
+            <li>In the app: target XYZ, elbow branch, tool tilt, motion speed and workspace display.</li>
+            <li>For the task: three or six boxes, a pyramid, row or tower, and draggable box and destination positions.</li>
+            <li>In the scene: add, move or clear up to four barriers; the route is planned around the current layout.</li>
+            <li>In MATLAB's configuration file: link lengths, joint ranges, speed and acceleration limits, box dimensions and travel height.</li>
+          </ul>
+        </div>
         <div style="margin-top:2rem">
           <div class="detail-section-title">Tools Used</div>
           <ul class="detail-list">
