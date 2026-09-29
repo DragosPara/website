@@ -969,6 +969,34 @@
       .lightbox-prev { left: .6rem; }
       .lightbox-next { right: .6rem; }
     }
+    /* The simulator footage keeps its full 16:9 interface visible. */
+    .project-gallery.simulator-gallery {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-auto-rows: auto;
+    }
+    .project-gallery.simulator-gallery video,
+    .project-gallery.simulator-gallery img {
+      grid-column: auto;
+      grid-row: auto;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      object-fit: contain;
+      background: #dfe7e9;
+    }
+    .project-gallery.simulator-gallery video {
+      grid-column: 1 / -1;
+      cursor: auto;
+    }
+    .simulator-gallery-note {
+      margin-top: .8rem;
+      color: var(--muted);
+      font-size: .85rem;
+    }
+    @media (max-width: 768px) {
+      .project-gallery.simulator-gallery { grid-template-columns: 1fr; }
+      .project-gallery.simulator-gallery video { grid-column: 1; }
+    }
   </style>
 </head>
 <body>
@@ -1102,7 +1130,7 @@
         </div>
         <div class="project-tags"><span class="tag">CAD</span><span class="tag">3D Print</span><span class="tag">Electronics</span><span class="tag">Prototyping</span></div>
         <h3 class="project-title">4 DoF robot arm</h3>
-        <p class="project-desc">Designed and 3d printed a 4-degree-of-freedom robotic arm in Siemens NX, focusing on kinematic analysis and workspace optimization. Implemented inverse kinematics to enable precise end-effector positioning.</p>
+        <p class="project-desc">Designing and 3D printing a 4 DoF arm in Siemens NX, using kinematics and workspace analysis to guide the mechanism. Assembly and control are still in progress.</p>
         <a class="project-link" href="#Robot-Arm" onclick="return openProject(event, 'Robot-Arm')">See more</a>
       </div>
 
@@ -1128,8 +1156,22 @@
 </svg>        </div>
         <div class="project-tags"><span class="tag">Simulink</span><span class="tag">Image Processing</span><span class="tag">FRF & Control</span><span class="tag">Stateflow</span></div>
         <h3 class="project-title">Control of a flexible robot system</h3>
-        <p class="project-desc">Developed a MATLAB/Simulink control system for a robot arm with conveyor belt and camera-based object detection. Implemented feedback/feedforward control across 3 axes, tuned via FRF measurements, to pick objects off a moving conveyor and place them at target coordinates.</p>
+        <p class="project-desc">Built MATLAB/Simulink control and Stateflow logic for a real robot arm, conveyor and camera. Tuned three-axis feedback and feedforward control with FRF measurements for automated pick-and-place.</p>
         <a class="project-link" href="#project-flexible-robot" onclick="return openProject(event, 'project-flexible-robot')">See more</a>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 21h18M12 21v-4M12 17l-5-7M7 10l7-4M14 6h5M19 4v4" />
+            <circle cx="12" cy="17" r="1" /><circle cx="7" cy="10" r="1" /><circle cx="14" cy="6" r="1" />
+            <path d="M19 4h2M19 8h2" />
+          </svg>
+        </div>
+        <div class="project-tags"><span class="tag">MATLAB</span><span class="tag">Inverse Kinematics</span><span class="tag">Motion Planning</span><span class="tag">Pick &amp; Place</span></div>
+        <h3 class="project-title">Interactive 3D robot arm simulator</h3>
+        <p class="project-desc">Built a MATLAB simulator for a 4 DoF arm that previews reachable poses and plans collision-aware motion. It can pick up randomly placed boxes and arrange them into a pyramid, row or tower.</p>
+        <a class="project-link" href="#project-robot-simulator" onclick="return openProject(event, 'project-robot-simulator')">See more</a>
       </div>
 
       <div class="project-card reveal">
@@ -1249,7 +1291,7 @@
     <div class="detail-header">
       <div class="project-tags"><span class="tag">CAD</span><span class="tag">3D Print</span><span class="tag">Electronics</span><span class="tag">Prototyping</span></div>
       <h2 class="detail-title">4 DoF Robot Arm</h2>
-      <p class="detail-intro">A 4-degree-of-freedom robotic arm designed and 3D printed in Siemens NX, focusing on kinematic analysis and workspace optimization.</p>
+      <p class="detail-intro">An ongoing 4 DoF arm project, from CAD and 3D printed components to kinematics and assembly.</p>
     </div>
     <div class="detail-body">
       <div>
@@ -1257,13 +1299,13 @@
         <div class="detail-text">
           <p>The idea came to mind as a next step after the course <b><i>Control of a flexible robot system</i></b>. I enjoyed controlling the robot so much, that I decided I wanted to work on all parts of it myself. Since there was no opportunity for me to do that in the University, I made my own robotic arm. </p>
           <p>I started my design by researching how other people tackled this problem. After finding a couple of online resources, I was confident I could begin sketching a few prototype ideas. Moving through the design process, I eventually had a few parts ready for printing in Siemens NX.</p>
-          <p>Of course, there were multiple iterations and refinements along the way. This robot is still being continuusly improved, helping me learn how to transfer the theories I learned in my classes, into a real working robot.</p>
+          <p>Of course, there were multiple iterations and refinements along the way. This robot is still being continuously improved, helping me learn how to transfer the theories I learned in my classes, into a real working robot.</p>
         </div>
       </div>
       <div>
         <div class="detail-section-title">Key Outcomes</div>
         <ul class="detail-list">
-          <li>To be determined, final assembly not finished.</li>
+          <li>CAD assembly and technical drawings developed in Siemens NX; final assembly and control validation remain in progress.</li>
         </ul>
         <div style="margin-top:2rem">
           <div class="detail-section-title">Tools Used</div>
@@ -1342,6 +1384,52 @@
 
   </div>
 </div>
+  </section>
+
+  <section class="project-detail" id="project-robot-simulator" aria-hidden="true">
+    <button class="detail-back" onclick="closeProject('project-robot-simulator')">← Back to Projects</button>
+    <div class="detail-header">
+      <div class="project-tags"><span class="tag">MATLAB</span><span class="tag">Inverse Kinematics</span><span class="tag">Motion Planning</span><span class="tag">Pick &amp; Place</span></div>
+      <h2 class="detail-title">Interactive 3D robot arm simulator</h2>
+      <p class="detail-intro">A standalone MATLAB environment for exploring arm motion, target reachability and automated box handling.</p>
+    </div>
+    <div class="detail-body">
+      <div>
+        <div class="detail-section-title">Overview</div>
+        <div class="detail-text">
+          <p>This is the software chapter of my three-part robotics series. <b><i>Control of a flexible robot system</i></b> let me work with a real arm and conveyor; <b><i>4 DoF Robot Arm</i></b> is my own printed mechanism. This simulator brings the ideas together in a place where I can test motion and pick-and-place behaviour. It is a separate model, rather than a digital twin of the printed arm.</p>
+          <p>I can enter a Cartesian target, choose an elbow configuration and tool tilt, then watch analytical inverse kinematics drive a smooth joint trajectory. Visible workspace points help me judge reachability before moving.</p>
+          <p>The scene starts with three randomly placed boxes. I can choose three or six boxes, drag the boxes or goal, add barriers, and ask the planner to build a pyramid, row or tower. The app checks each grasp and placement, with pause, step and replay controls for inspecting the sequence.</p>
+          <p>AI helped write and refine parts of the MATLAB code. I checked the resulting behaviour with simulator runs and automated tests.</p>
+        </div>
+      </div>
+      <div>
+        <div class="detail-section-title">Key Outcomes</div>
+        <ul class="detail-list">
+          <li>Analytical inverse kinematics, pose preview and reachable-workspace display</li>
+          <li>Collision-aware routes around editable barriers</li>
+          <li>Verified three- or six-box pick-and-place into a pyramid, row or tower</li>
+          <li>Playback controls and on-screen suction and placement feedback</li>
+        </ul>
+        <div style="margin-top:2rem">
+          <div class="detail-section-title">Tools Used</div>
+          <ul class="detail-list">
+            <li>MATLAB R2024b, using base MATLAB graphics and UI components</li>
+            <li>AI-assisted coding, followed by simulator and automated test checks</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:2.5rem">
+      <div class="detail-section-title">Working Simulator</div>
+      <div class="project-gallery simulator-gallery">
+        <video src="images/robot-simulator-demo.mp4" poster="images/robot-simulator-overview.png" controls loop muted playsinline preload="metadata" aria-label="MATLAB simulator placing three boxes into a pyramid"></video>
+        <img src="images/robot-simulator-overview.png" alt="MATLAB simulator before pick-and-place, with three boxes and reachable-workspace points" loading="lazy" onclick="openLightbox(this)">
+        <img src="images/robot-simulator-motion.png" alt="Robot carrying a box during the pick-and-place sequence" loading="lazy" onclick="openLightbox(this)">
+        <img src="images/robot-simulator-pyramid.png" alt="Three boxes arranged into a pyramid with completion status visible" loading="lazy" onclick="openLightbox(this)">
+      </div>
+      <p class="simulator-gallery-note">Complete three-box pyramid run, captured frame by frame from MATLAB at 30 fps.</p>
+    </div>
   </section>
 
   <!-- AFM VOICE COIL PROJECT DETAIL BLOCK ADDED HERE -->
