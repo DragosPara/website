@@ -21,7 +21,7 @@
   <link rel="manifest" href="images/site.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
  
@@ -812,9 +812,94 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
     }
+
+    /* ── MOTION LAYER ────────────────────────────── */
+    .scroll-progress {
+      position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 1300;
+      background: linear-gradient(90deg, var(--steel), var(--amber));
+      transform: scaleX(0); transform-origin: left; pointer-events: none;
+    }
+    nav { transition: padding .3s ease, box-shadow .3s ease, top .3s ease, background .3s ease; }
+    nav.scrolled { top: .6rem; box-shadow: 0 12px 34px rgba(25,43,59,.14); background: color-mix(in srgb, var(--card-bg) 94%, transparent); }
+
+    /* Hero: line-by-line name reveal */
+    .hero-name { animation: none; }
+    .hero-name .line { display: block; overflow: hidden; padding-bottom: .1em; margin-bottom: -.1em; }
+    .hero-name .line > span { display: inline-block; animation: lineUp .9s cubic-bezier(.2,.8,.2,1) both; }
+    .hero-name .line:nth-child(2) > span { animation-delay: .12s; }
+    @keyframes lineUp { from { transform: translateY(105%); } to { transform: translateY(0); } }
+    .hero-eyebrow { animation: slideUp .7s ease-out both; }
+
+    /* Hero: cursor glow on the blueprint grid */
+    #hero::after {
+      display: block; content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(circle 280px at var(--mx, 70%) var(--my, 45%), color-mix(in srgb, var(--amber) 9%, transparent), transparent 70%);
+      transition: opacity .4s ease;
+    }
+
+    /* Hero: inverse-kinematics robot arm */
+    .hero-arm {
+      position: absolute; right: max(3vw, calc((100vw - 1320px) / 2)); bottom: 0;
+      width: min(46vw, 640px); height: auto; z-index: 1; pointer-events: none;
+      color: var(--navy); overflow: visible;
+      animation: armIn 1.2s .35s cubic-bezier(.2,.8,.2,1) both;
+    }
+    @keyframes armIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+    .hero-arm .workspace { fill: none; stroke: var(--steel); stroke-width: 1; stroke-dasharray: 4 6; opacity: .45;
+      animation: fadeIn 1.6s .6s ease-out both; }
+    @keyframes fadeIn { from { opacity: 0; } }
+    .hero-arm .ground { stroke: var(--navy); stroke-width: 2; }
+    .hero-arm .hatch { stroke: var(--muted); stroke-width: 1; opacity: .5; }
+    .hero-arm .base { fill: var(--card-bg); stroke: var(--navy); stroke-width: 2; }
+    .hero-arm .link { stroke: var(--navy); stroke-width: 16; stroke-linecap: round; }
+    .hero-arm .link-inner { stroke: var(--card-bg); stroke-width: 9; stroke-linecap: round; }
+    .hero-arm .link-axis { stroke: var(--steel); stroke-width: 1; stroke-dasharray: 3 4; opacity: .8; }
+    .hero-arm .joint { fill: var(--amber); stroke: var(--navy); stroke-width: 2.5; }
+    .hero-arm .joint-pin { fill: var(--navy); }
+    .hero-arm .gripper { fill: none; stroke: var(--navy); stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }
+    .hero-arm .target { fill: none; stroke: var(--amber); stroke-width: 1.5; }
+    .hero-arm .angle-arc { fill: none; stroke: var(--amber); stroke-width: 1.5; }
+    .hero-arm .readout { font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 600; fill: var(--muted); letter-spacing: .02em; }
+    .hero-arm .readout tspan.v { fill: var(--navy); }
+    @media (max-width: 980px) { .hero-arm { display: none; } #hero::after { display: none; } }
+
+    /* Section titles: wipe in */
+    html.js .section-title { clip-path: inset(0 100% 0 0); transition: clip-path 1s cubic-bezier(.2,.8,.2,1) .1s; }
+    html.js .section-title.visible { clip-path: inset(0 0 0 0); }
+    html.js .section-label::before { transform: scaleX(0); transform-origin: left; transition: transform .7s cubic-bezier(.2,.8,.2,1); }
+    html.js .section-label.visible::before { transform: scaleX(1); }
+
+    /* Project cards: cursor spotlight + gentle tilt */
+    .project-card { transform-style: preserve-3d; will-change: transform; }
+    .project-card::after {
+      content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 0;
+      background: radial-gradient(420px circle at var(--cx, 50%) var(--cy, 50%), rgba(255,173,113,.16), transparent 45%);
+      opacity: 0; transition: opacity .3s ease;
+    }
+    .project-card:hover::after { opacity: 1; }
+    .project-card .project-icon { transition: transform .35s cubic-bezier(.2,.8,.2,1); }
+    .project-card:hover .project-icon { transform: rotate(-8deg) scale(1.06); }
+
+    /* Gallery images fade in once loaded */
+    html.js .project-gallery img { opacity: 0; transition: opacity .5s ease, transform .2s ease, box-shadow .2s ease; }
+    html.js .project-gallery img.is-loaded { opacity: 1; }
+
+    /* Skill tags and contact buttons: small lift */
+    .skill-tag { transition: opacity .6s ease, transform .6s ease, border-color .2s ease; }
+    .skill-tag:hover { border-color: color-mix(in srgb, var(--amber) 60%, var(--border)); }
+    .btn-primary::after { content: '→'; transition: transform .2s ease; }
+    .btn-primary:hover::after { transform: translateX(4px); }
+
+    @media (prefers-reduced-motion: reduce) {
+      html.js .section-title { clip-path: none; }
+      .hero-name .line > span { animation: none; }
+      .scroll-progress { display: none; }
+    }
   </style>
 </head>
 <body>
+<script>document.documentElement.classList.add("js");</script>
+<div class="scroll-progress" aria-hidden="true"></div>
 <!-- NAV -->
 <nav aria-label="Main navigation">
   <div class="nav-logo">
@@ -839,7 +924,8 @@
     <div class="hero-content">
       <div class="hero-eyebrow">Mechanical Engineering Student</div>
       <h1 class="hero-name">
-        Hi, I'm<br><span class="accent">Dragoș Paraschiv</span>
+        <span class="line"><span>Hi, I'm</span></span>
+        <span class="line"><span class="accent">Dragoș Paraschiv</span></span>
       </h1>
       <p class="hero-tagline">
         Third-year Mechanical Engineering student at TU/e with a strong interest in dynamics, control, and understanding how things move.
@@ -849,6 +935,26 @@
         <a href="#contact" class="btn btn-outline">Get in Touch</a>
       </div>
     </div>
+    <svg class="hero-arm" viewBox="0 0 680 570" aria-hidden="true" focusable="false">
+      <path class="workspace" d="M 0 512 A 340 340 0 0 1 680 512"/>
+      <line class="ground" x1="200" y1="548" x2="480" y2="548"/>
+      <g class="hatch"><line x1="214" y1="548" x2="202" y2="562"/><line x1="230" y1="548" x2="218" y2="562"/><line x1="246" y1="548" x2="234" y2="562"/><line x1="262" y1="548" x2="250" y2="562"/><line x1="278" y1="548" x2="266" y2="562"/><line x1="294" y1="548" x2="282" y2="562"/><line x1="310" y1="548" x2="298" y2="562"/><line x1="326" y1="548" x2="314" y2="562"/><line x1="342" y1="548" x2="330" y2="562"/><line x1="358" y1="548" x2="346" y2="562"/><line x1="374" y1="548" x2="362" y2="562"/><line x1="390" y1="548" x2="378" y2="562"/><line x1="406" y1="548" x2="394" y2="562"/><line x1="422" y1="548" x2="410" y2="562"/><line x1="438" y1="548" x2="426" y2="562"/><line x1="454" y1="548" x2="442" y2="562"/><line x1="470" y1="548" x2="458" y2="562"/></g>
+      <path class="base" d="M 296 548 L 306 506 L 374 506 L 384 548 Z"/>
+      <path class="angle-arc" id="armArc1" d=""/>
+      <path class="angle-arc" id="armArc2" d=""/>
+      <line class="link" id="armL1" x1="340" y1="512" x2="340" y2="330"/>
+      <line class="link-inner" id="armL1i" x1="340" y1="512" x2="340" y2="330"/>
+      <line class="link" id="armL2" x1="340" y1="330" x2="340" y2="170"/>
+      <line class="link-inner" id="armL2i" x1="340" y1="330" x2="340" y2="170"/>
+      <line class="link-axis" id="armA1" x1="340" y1="512" x2="340" y2="330"/>
+      <line class="link-axis" id="armA2" x1="340" y1="330" x2="340" y2="170"/>
+      <path class="gripper" id="armGrip" d=""/>
+      <circle class="joint" cx="340" cy="512" r="13"/><circle class="joint-pin" cx="340" cy="512" r="3.5"/>
+      <g id="armElbow"><circle class="joint" r="10"/><circle class="joint-pin" r="3"/></g>
+      <g id="armTarget" class="target"><circle r="9"/><line x1="-15" y1="0" x2="15" y2="0"/><line x1="0" y1="-15" x2="0" y2="15"/></g>
+      <text class="readout" x="420" y="486">θ₁ = <tspan class="v" id="armT1">90°</tspan></text>
+      <text class="readout" x="420" y="506">θ₂ = <tspan class="v" id="armT2">0°</tspan></text>
+    </svg>
   </section>
 
   <!-- ABOUT -->
@@ -1154,11 +1260,11 @@
     <div style="margin-top:2.5rem">
       <div class="detail-section-title">Gallery</div>
       <div class="project-gallery">
-        <img src="images/_asm2.png" alt="CAD assembly of the 4 DoF robot arm in Siemens NX" onclick="openLightbox(this)">
-        <img src="images/IMG_1710.png" alt="Printed robot arm joint detail" onclick="openLightbox(this)">
-        <img src="images/tech_draw.png" alt="Technical drawing of a robot arm part" onclick="openLightbox(this)">
-        <img src="images/bambu.png" alt="Robot arm part being printed on the 3D printer" onclick="openLightbox(this)">
-        <img src="images/old_base.png" alt="Earlier iteration of the robot arm base" onclick="openLightbox(this)">
+        <img src="images/opt/asm2-thumb.webp" data-full="images/opt/asm2-full.webp" width="800" height="800" loading="lazy" decoding="async" alt="CAD assembly of the 4 DoF robot arm in Siemens NX" onclick="openLightbox(this)">
+        <img src="images/opt/img_1710-thumb.webp" data-full="images/opt/img_1710-full.webp" width="600" height="800" loading="lazy" decoding="async" alt="Printed robot arm joint detail" onclick="openLightbox(this)">
+        <img src="images/opt/tech_draw-thumb.webp" data-full="images/opt/tech_draw-full.webp" width="637" height="800" loading="lazy" decoding="async" alt="Technical drawing of a robot arm part" onclick="openLightbox(this)">
+        <img src="images/opt/bambu-thumb.webp" data-full="images/opt/bambu-full.webp" width="800" height="449" loading="lazy" decoding="async" alt="Robot arm part being printed on the 3D printer" onclick="openLightbox(this)">
+        <img src="images/opt/old_base-thumb.webp" data-full="images/opt/old_base-full.webp" width="800" height="648" loading="lazy" decoding="async" alt="Earlier iteration of the robot arm base" onclick="openLightbox(this)">
       </div>
     </div>
   </section>
@@ -1203,12 +1309,12 @@
   <div class="detail-section-title">Gallery</div>
   <div class="project-gallery">
 
-    <video src="images/video_robott.mp4" poster="images/robot.PNG" preload="metadata" muted playsinline aria-label="Robot picking objects off the conveyor" onclick="openLightbox(this)"></video>
+    <video src="images/opt/robot-demo.mp4" poster="images/opt/robot-demo-poster.webp" preload="none" muted playsinline aria-label="Robot picking objects off the conveyor" onclick="openLightbox(this)"></video>
 
-    <img src="images/simulink.png" alt="Simulink control model of the robot" onclick="openLightbox(this)">
-    <img src="images/robot.PNG" alt="Flexible robot arm setup with conveyor and camera" onclick="openLightbox(this)">
-    <img src="images/matlab.JPG" alt="MATLAB analysis for controller tuning" onclick="openLightbox(this)">   
-    <img src="images/PosterGroup15.png" alt="Group 15 project poster" onclick="openLightbox(this)">
+    <img src="images/opt/simulink-thumb.webp" data-full="images/opt/simulink-full.webp" width="800" height="413" loading="lazy" decoding="async" alt="Simulink control model of the robot" onclick="openLightbox(this)">
+    <img src="images/opt/robot-thumb.webp" data-full="images/opt/robot-full.webp" width="800" height="453" loading="lazy" decoding="async" alt="Flexible robot arm setup with conveyor and camera" onclick="openLightbox(this)">
+    <img src="images/opt/matlab-thumb.webp" data-full="images/opt/matlab-full.webp" width="800" height="558" loading="lazy" decoding="async" alt="MATLAB analysis for controller tuning" onclick="openLightbox(this)">   
+    <img src="images/opt/postergroup15-thumb.webp" data-full="images/opt/postergroup15-full.webp" width="566" height="800" loading="lazy" decoding="async" alt="Group 15 project poster" onclick="openLightbox(this)">
 
   </div>
 </div>
@@ -1267,10 +1373,10 @@
     <div style="margin-top:2.5rem">
       <div class="detail-section-title">Working Simulator</div>
       <div class="project-gallery simulator-gallery">
-        <video src="images/robot-simulator-demo.mp4" poster="images/robot-simulator-overview.png" controls loop muted playsinline preload="metadata" aria-label="MATLAB simulator placing three boxes into a pyramid"></video>
-        <img src="images/robot-simulator-overview.png" alt="MATLAB simulator before pick-and-place, with three boxes and reachable-workspace points" loading="lazy" onclick="openLightbox(this)">
-        <img src="images/robot-simulator-motion.png" alt="Robot carrying a box during the pick-and-place sequence" loading="lazy" onclick="openLightbox(this)">
-        <img src="images/robot-simulator-pyramid.png" alt="Three boxes arranged into a pyramid with completion status visible" loading="lazy" onclick="openLightbox(this)">
+        <video src="images/opt/robot-simulator-demo.mp4" poster="images/opt/robot-simulator-overview-full.webp" controls loop muted playsinline preload="none" aria-label="MATLAB simulator placing three boxes into a pyramid"></video>
+        <img src="images/opt/robot-simulator-overview-thumb.webp" data-full="images/opt/robot-simulator-overview-full.webp" width="800" height="450" loading="lazy" decoding="async" alt="MATLAB simulator before pick-and-place, with three boxes and reachable-workspace points" onclick="openLightbox(this)">
+        <img src="images/opt/robot-simulator-motion-thumb.webp" data-full="images/opt/robot-simulator-motion-full.webp" width="800" height="450" loading="lazy" decoding="async" alt="Robot carrying a box during the pick-and-place sequence" onclick="openLightbox(this)">
+        <img src="images/opt/robot-simulator-pyramid-thumb.webp" data-full="images/opt/robot-simulator-pyramid-full.webp" width="800" height="450" loading="lazy" decoding="async" alt="Three boxes arranged into a pyramid with completion status visible" onclick="openLightbox(this)">
       </div>
       <p class="simulator-gallery-note">Complete three-box pyramid run, captured frame by frame from MATLAB at 30 fps.</p>
     </div>
@@ -1321,10 +1427,10 @@
     <div style="margin-top:2.5rem">
       <div class="detail-section-title">Gallery</div>
   <div class="project-gallery">
-    <img src="images/VCA1.png" alt="Voice coil actuator FEMM simulation" onclick="openLightbox(this)">
-    <img src="images/VCA2.png" alt="Voice coil actuator magnetic flux density plot" onclick="openLightbox(this)">
-    <img src="images/VCA3.png" alt="Voice coil actuator design detail" onclick="openLightbox(this)">   
-    <img src="images/VCA.png" alt="Voice coil actuator CAD model" onclick="openLightbox(this)">
+    <img src="images/opt/vca1-thumb.webp" data-full="images/opt/vca1-full.webp" width="800" height="449" loading="lazy" decoding="async" alt="Voice coil actuator FEMM simulation" onclick="openLightbox(this)">
+    <img src="images/opt/vca2-thumb.webp" data-full="images/opt/vca2-full.webp" width="800" height="451" loading="lazy" decoding="async" alt="Voice coil actuator magnetic flux density plot" onclick="openLightbox(this)">
+    <img src="images/opt/vca3-thumb.webp" data-full="images/opt/vca3-full.webp" width="800" height="450" loading="lazy" decoding="async" alt="Voice coil actuator design detail" onclick="openLightbox(this)">   
+    <img src="images/opt/vca-thumb.webp" data-full="images/opt/vca-full.webp" width="330" height="394" loading="lazy" decoding="async" alt="Voice coil actuator CAD model" onclick="openLightbox(this)">
 
   </div>
 </div>
@@ -1525,7 +1631,7 @@
         lightboxVideo.style.display = 'none';
         lightboxVideo.src = '';
         lightboxImg.style.display = 'block';
-        lightboxImg.src = el.src;
+        lightboxImg.src = el.dataset.full || el.currentSrc || el.src;
       }
 
       // Hide arrows entirely if this gallery only has one item
@@ -1641,6 +1747,149 @@
         closeLightbox();
       }
     });
+
+    /* ── MOTION LAYER ──────────────────────────── */
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    // Scroll progress bar + compact nav
+    const progressBar = document.querySelector('.scroll-progress');
+    const navEl = document.querySelector('nav');
+    let scrollTicking = false;
+    function onScroll() {
+      const max = document.documentElement.scrollHeight - innerHeight;
+      progressBar.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
+      navEl.classList.toggle('scrolled', scrollY > 40);
+      scrollTicking = false;
+    }
+    addEventListener('scroll', () => { if (!scrollTicking) { scrollTicking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+    onScroll();
+
+    // Section titles and labels
+    // (observe the parent: a fully clipped title never counts as "intersecting" itself)
+    const titleObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        e.target.querySelectorAll(':scope > .section-title, :scope > .section-label').forEach(el => el.classList.add('visible'));
+        titleObserver.unobserve(e.target);
+      });
+    }, { rootMargin: '0px 0px -15% 0px' });
+    new Set([...document.querySelectorAll('.section-title, .section-label')].map(el => el.parentElement))
+      .forEach(parent => titleObserver.observe(parent));
+
+    // Gallery images fade in when loaded
+    document.querySelectorAll('.project-gallery img').forEach(img => {
+      if (img.complete && img.naturalWidth) img.classList.add('is-loaded');
+      else img.addEventListener('load', () => img.classList.add('is-loaded'), { once: true });
+      img.addEventListener('error', () => img.classList.add('is-loaded'), { once: true });
+    });
+
+    // Project cards: spotlight + tilt
+    if (finePointer && !reduceMotion) {
+      document.querySelectorAll('.project-card').forEach(card => {
+        card.addEventListener('pointermove', (e) => {
+          const r = card.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+          card.style.setProperty('--cx', `${x * 100}%`);
+          card.style.setProperty('--cy', `${y * 100}%`);
+          card.style.transform = `perspective(900px) translateY(-5px) rotateX(${(0.5 - y) * 5}deg) rotateY(${(x - 0.5) * 6}deg)`;
+        });
+        card.addEventListener('pointerleave', () => { card.style.transform = ''; });
+      });
+    }
+
+    // Hero: two-link arm solved with analytical inverse kinematics
+    (function heroArm() {
+      const svg = document.querySelector('.hero-arm');
+      const hero = document.getElementById('hero');
+      if (!svg || getComputedStyle(svg).display === 'none') return;
+      const $ = (id) => document.getElementById(id);
+      const B = { x: 340, y: 512 }, L1 = 185, L2 = 155;
+      const goal = { x: 440, y: 280 };
+      let lastPointer = -1e9, running = false, visible = true;
+
+      const setLine = (el, a, b) => { el.setAttribute('x1', a.x); el.setAttribute('y1', a.y); el.setAttribute('x2', b.x); el.setAttribute('y2', b.y); };
+      const arc = (c, r, a0, a1) => {
+        const p0 = { x: c.x + r * Math.cos(a0), y: c.y + r * Math.sin(a0) };
+        const p1 = { x: c.x + r * Math.cos(a1), y: c.y + r * Math.sin(a1) };
+        const large = Math.abs(a1 - a0) > Math.PI ? 1 : 0, sweep = a1 > a0 ? 1 : 0;
+        return `M ${p0.x.toFixed(1)} ${p0.y.toFixed(1)} A ${r} ${r} 0 ${large} ${sweep} ${p1.x.toFixed(1)} ${p1.y.toFixed(1)}`;
+      };
+
+      const wrap = (a) => Math.atan2(Math.sin(a), Math.cos(a));
+      let a1 = -Math.PI / 2 + 0.3, a2 = -0.6, branch = 1;
+
+      // Analytical IK: both elbow solutions for target t (q1 absolute, q2 relative to link 1)
+      function ik(t) {
+        let dx = t.x - B.x, dy = t.y - B.y, d = Math.hypot(dx, dy);
+        const dMax = L1 + L2 - 1, dMin = Math.abs(L1 - L2) + 20;
+        if (d > dMax || d < dMin) { const k = Math.min(Math.max(d, dMin), dMax) / (d || 1); dx *= k; dy *= k; d = Math.hypot(dx, dy); }
+        const phi = Math.atan2(dy, dx);
+        const beta = Math.acos(Math.min(1, Math.max(-1, (L1 * L1 + d * d - L2 * L2) / (2 * L1 * d))));
+        const gamma = Math.acos(Math.min(1, Math.max(-1, (L1 * L1 + L2 * L2 - d * d) / (2 * L1 * L2))));
+        return [1, -1].map(sgn => {
+          const q1 = phi - sgn * beta;
+          return { q1, q2: sgn * (Math.PI - gamma), ey: B.y + L1 * Math.sin(q1) };
+        });
+      }
+
+      function draw() {
+        const E = { x: B.x + L1 * Math.cos(a1), y: B.y + L1 * Math.sin(a1) };
+        const q12 = a1 + a2;
+        const T = { x: E.x + L2 * Math.cos(q12), y: E.y + L2 * Math.sin(q12) };
+        setLine($('armL1'), B, E); setLine($('armL1i'), B, E); setLine($('armA1'), B, E);
+        setLine($('armL2'), E, T); setLine($('armL2i'), E, T); setLine($('armA2'), E, T);
+        $('armElbow').setAttribute('transform', `translate(${E.x.toFixed(1)} ${E.y.toFixed(1)})`);
+        $('armTarget').setAttribute('transform', `translate(${goal.x.toFixed(1)} ${goal.y.toFixed(1)})`);
+        // gripper jaws perpendicular to the second link
+        const ux = Math.cos(q12), uy = Math.sin(q12), nx = -uy, ny = ux, w = 13, j = 18;
+        const P = (a, b) => `${(T.x + ux * a + nx * b).toFixed(1)} ${(T.y + uy * a + ny * b).toFixed(1)}`;
+        $('armGrip').setAttribute('d', `M ${P(0, -w)} L ${P(0, w)} M ${P(0, -w)} L ${P(j, -w + 3)} M ${P(0, w)} L ${P(j, w - 3)}`);
+        // textbook convention: θ1 from the ground, θ2 relative to link 1 (counter-clockwise positive)
+        $('armT1').textContent = `${(-a1 * 180 / Math.PI).toFixed(0)}°`;
+        $('armT2').textContent = `${(-wrap(a2) * 180 / Math.PI).toFixed(0)}°`;
+        $('armArc1').setAttribute('d', arc(B, 40, Math.min(0, a1), Math.max(0, a1)));
+        $('armArc2').setAttribute('d', arc(E, 30, Math.min(a1, q12), Math.max(a1, q12)));
+      }
+
+      function idleGoal(time) {
+        const s = time / 2600;
+        goal.x = 340 + 170 * Math.sin(s);
+        goal.y = 270 + 80 * Math.sin(2 * s);
+      }
+
+      function frame(time) {
+        if (!visible) { running = false; return; }
+        if (time - lastPointer > 2500) idleGoal(time);
+        const sols = ik(goal);
+        // prefer the elbow-up solution, with hysteresis so the arm doesn't flip back and forth
+        const other = branch === 1 ? 1 : 0;
+        if (sols[other].ey < sols[1 - other].ey - 25) branch = branch === 1 ? -1 : 1;
+        const sol = sols[branch === 1 ? 0 : 1];
+        a1 += wrap(sol.q1 - a1) * 0.09;
+        a2 += wrap(sol.q2 - a2) * 0.09;
+        draw();
+        requestAnimationFrame(frame);
+      }
+      const start = () => { if (!running && !reduceMotion) { running = true; requestAnimationFrame(frame); } };
+
+      hero.addEventListener('pointermove', (e) => {
+        const r = hero.getBoundingClientRect();
+        hero.style.setProperty('--mx', `${e.clientX - r.left}px`);
+        hero.style.setProperty('--my', `${e.clientY - r.top}px`);
+        const m = svg.getScreenCTM(); if (!m) return;
+        const pt = new DOMPoint(e.clientX, e.clientY).matrixTransform(m.inverse());
+        // map the whole hero into the arm's reachable workspace
+        goal.x = B.x + (pt.x - B.x) * 0.62;
+        goal.y = Math.min(B.y + (pt.y - B.y) * 0.62, B.y - 60);
+        lastPointer = performance.now();
+      });
+
+      new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible) start(); }).observe(hero);
+      if (reduceMotion) { const sol = ik(goal)[0]; a1 = sol.q1; a2 = sol.q2; }
+      draw();
+      start();
+    })();
   </script>
 </body>
 </html>
