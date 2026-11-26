@@ -3,7 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dragos Paraschiv</title>
+  <title>Dragoș Paraschiv · Mechanical Engineering Portfolio</title>
+  <meta name="description" content="Portfolio of Dragoș Paraschiv, Mechanical Engineering student at TU/e working on dynamics, control and mechatronics: robot control, a voice coil actuator and a 4 DoF robot arm.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Dragoș Paraschiv · Mechanical Engineering Portfolio">
+  <meta property="og:description" content="Robot control, actuator design and robotics projects by a TU/e Mechanical Engineering student.">
   <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
@@ -25,21 +29,6 @@
       --border:   #D6D3CD;
     }
 
-    /* ── DARK MODE ───────────────────────────────── */
-    [data-theme="dark"] {
-      --bg:       #111318;
-      --navy:     #ECEEF2;
-      --steel:    #5E9FD8;
-      --amber:    #F2BA2C;
-      --muted:    #7A8A9E;
-      --card-bg:  #1A1F2E;
-      --border:   #262D3F;
-    }
-    [data-theme="dark"] .about-text p,
-    [data-theme="dark"] .detail-text,
-    [data-theme="dark"] .detail-list li,
-    [data-theme="dark"] .detail-intro { color: var(--muted); }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -60,7 +49,6 @@
       border-bottom: 1px solid var(--border);
       transition: background 0.4s ease, border-color 0.4s ease;
     }
-    [data-theme="dark"] nav { background: rgba(13,27,42,0.82); }
     .nav-right { display: flex; align-items: center; gap: 2.2rem; }
     .nav-logo {
       font-family: 'Space Grotesk', sans-serif;
@@ -93,21 +81,6 @@
       animation: underlineGrow 0.3s ease-out both;
     }
     @keyframes underlineGrow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-
-    /* ── THEME TOGGLE ────────────────────────────── */
-    .theme-toggle {
-      display: flex; align-items: center; justify-content: center;
-      width: 34px; height: 34px; border-radius: 50%;
-      border: 1.5px solid var(--border); background: transparent;
-      color: var(--navy); cursor: pointer;
-      transition: border-color 0.25s ease, color 0.25s ease, transform 0.4s ease;
-      flex-shrink: 0;
-    }
-    .theme-toggle:hover { border-color: var(--steel); color: var(--steel); transform: rotate(35deg); }
-    .theme-toggle svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; }
-    .theme-toggle .icon-sun { display: none; }
-    [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
-    [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
 
     /* ── HERO ────────────────────────────────────── */
     #hero {
@@ -185,17 +158,6 @@
     }
     .btn-outline:hover { border-color: var(--steel); color: var(--steel); transform: translateY(-1px); }
 
-    .hero-stats {
-      margin-top: 4rem; display: flex; gap: 2.5rem; flex-wrap: wrap;
-      animation: slideUp 0.8s 0.65s ease-out both;
-    }
-    .stat-item { display: flex; flex-direction: column; gap: 0.2rem; }
-    .stat-num {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.9rem; font-weight: 700; color: var(--navy); line-height: 1;
-    }
-    .stat-num span { color: var(--amber); }
-    .stat-label { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; }
 
     @keyframes slideUp {
       from { opacity: 0; transform: translateY(24px); }
@@ -340,10 +302,6 @@
     }
     .lang-bar-fill.amber { background: var(--amber); }
     .languages-panel.open .lang-bar-fill { transform: scaleX(1); }
-    .lang-bar-fill:nth-child(1) { transition-delay: 0.05s; }
-    .lang-bar-fill:nth-child(2) { transition-delay: 0.1s; }
-    .lang-bar-fill:nth-child(3) { transition-delay: 0.15s; }
-    .lang-bar-fill:nth-child(4) { transition-delay: 0.2s; }
 
     /* ── PROJECTS ────────────────────────────────── */
     .projects-grid {
@@ -526,12 +484,6 @@
       content: ''; width: 6px; height: 6px; border-radius: 50%;
       background: var(--steel); flex-shrink: 0; margin-top: 0.45rem;
     }
-    .detail-placeholder {
-      background: var(--card-bg); border: 1.5px dashed var(--border);
-      border-radius: 6px; padding: 3rem 2rem;
-      text-align: center; color: var(--muted); font-size: 0.88rem; line-height: 1.6;
-    }
-    .detail-placeholder strong { display: block; margin-bottom: 0.4rem; font-weight: 600; color: var(--navy); }
     @media (max-width: 768px) {
       .detail-body { grid-template-columns: 1fr; gap: 2rem; }
     }
@@ -591,7 +543,6 @@
       nav ul { gap: 1.2rem; }
       .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
       .timeline-item { grid-template-columns: 1fr; gap: 0.4rem; }
-      .hero-stats { gap: 1.5rem; }
     }
     @media (max-width: 480px) {
       nav ul { display: none; }
@@ -691,11 +642,6 @@
     .btn-primary { background: var(--navy); box-shadow: 0 8px 20px rgba(16,32,51,.15); }
     .btn-primary:hover { background: var(--steel); transform: translateY(-2px); }
     .btn-outline { border: 1px solid var(--border); background: color-mix(in srgb, var(--card-bg) 75%, transparent); }
-    .hero-stats { gap: 0; width: fit-content; margin-top: 3rem; overflow: hidden; border: 1px solid var(--border); border-radius: 14px; background: color-mix(in srgb, var(--card-bg) 78%, transparent); }
-    .stat-item { min-width: 130px; padding: .85rem 1rem; }
-    .stat-item + .stat-item { border-left: 1px solid var(--border); }
-    .stat-num { font-size: 1.55rem; }
-    .stat-num span { color: var(--amber); }
 
     /* Sections and shared alignment */
     section { padding: clamp(5rem, 8vw, 7.5rem) max(7vw, calc((100vw - 1200px) / 2)); }
@@ -769,7 +715,6 @@
     .detail-header { max-width: 820px; }
     .detail-intro, .detail-text, .detail-list li { color: var(--muted); }
     .detail-body { gap: clamp(2rem, 6vw, 5rem); }
-    .detail-placeholder { border-radius: 16px; background: var(--card-bg); }
     body.project-open { overflow: hidden; }
     body.project-open::after { content: ''; position: fixed; inset: 0; z-index: 900; background: rgba(9,21,31,.68); backdrop-filter: blur(9px); animation: viewerBackdropIn .28s ease both; }
     .project-detail.active {
@@ -832,8 +777,6 @@
       #hero::before { inset: 0; opacity: .8; }
       .hero-content { z-index: 2; }
       .hero-name { font-size: clamp(3rem, 12vw, 4.4rem); }
-      .hero-stats { max-width: 100%; }
-      .stat-item { min-width: 0; flex: 1; }
       section { padding: 4.7rem 1.5rem; }
       .about-grid, .detail-body { grid-template-columns: 1fr; gap: 2.4rem; }
       .projects-grid, .timeline { grid-template-columns: 1fr; }
@@ -854,7 +797,6 @@
     @media (max-width: 420px) {
       nav { padding-right: .55rem; }
       .skills-grid { grid-template-columns: 1fr; }
-      .hero-stats { width: 100%; }
       .contact-links { flex-direction: column; }
       .contact-item { justify-content: center; }
       footer { align-items: flex-start; flex-direction: column; }
@@ -910,12 +852,13 @@
     <div class="about-grid">
       <div class="about-text reveal">
         <p>
-          I am currently pursuing a degree in Mechanical Engineering at TU/e. I always wanted to know how things work and how they can be made better. I like working on dynamics and control related problems, or sketching a prototype for a new project. I always try to keep an open mind and be creative when I am working on something.        </p>
-        <p>
-          Outside of class I like to work on projects that I am really interested in. I also like to stay active and spend time with my friends. We like to play sports like squash or go to the gym.
+          I'm a third-year Mechanical Engineering student at TU/e, most interested in dynamics, control and mechatronics. What got me hooked was the <i>Control of a Flexible Robot System</i> course: tuning feedback and feedforward controllers on real hardware and dealing with the delays and noise that never show up in a simulation. Since then I've been building my own 4 DoF robot arm and a MATLAB simulator to plan its motion.
         </p>
         <p>
-          I’m always looking for ways to apply what I have learned. Now I am looking for internship opportunities and projects that I can work on with other people. I want to use my skills and learn more about being a good engineer.
+          I've always taken things apart to see how they work, and that is still how I learn best: build it, measure it, improve it. Next to my studies I work about 20 hours a week at Albert Heijn and teach Calculus II tutorials, which has taught me to explain the same idea in several ways until it lands. Away from the desk I'm usually on a squash court or at the gym.
+        </p>
+        <p>
+          I'm looking for an internship in control, mechatronics or robotics, where I can work on real hardware in a team and learn from experienced engineers.
         </p>
       </div>
       <div class="reveal">
@@ -926,7 +869,7 @@
           <div class="skill-tag">Arduino</div>
           <div class="skill-tag">Electronics</div>
           <div class="skill-tag">Mathematical modeling</div>
-          <div class="skill-tag">FEMM modeling / analysis </div>
+          <div class="skill-tag">FEMM modeling / analysis</div>
           <div class="skill-tag">Simulink</div>
           <div class="skill-tag">FEA</div>
           <div class="skill-tag">3D Printing / FDM</div>
@@ -959,7 +902,7 @@
                 <span class="lang-cert">TOEFL C1</span>
               </div>
               <div class="lang-bar-track">
-                <div class="lang-bar-fill amber" style="width:100%"></div>
+                <div class="lang-bar-fill amber" style="width:85%"></div>
               </div>
             </div>
 
@@ -969,7 +912,7 @@
                 <span class="lang-cert">DALF C1</span>
               </div>
               <div class="lang-bar-track">
-                <div class="lang-bar-fill amber" style="width:100%"></div>
+                <div class="lang-bar-fill amber" style="width:85%"></div>
               </div>
             </div>
 
@@ -1068,6 +1011,19 @@
         <a class="project-link" href="#project-afm-actuator" onclick="return openProject(event, 'project-afm-actuator')">See more</a>
       </div>
 
+
+      <div class="project-card reveal">
+        <div class="project-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="6" y="8" width="12" height="6" rx="1.5"/>
+            <path d="M8 14l-2 5M11 14l-1 5M13 14l1 5M16 14l2 5"/>
+            <path d="M9 8V6h6v2"/>
+          </svg>
+        </div>
+        <div class="project-tags"><span class="tag">CAD</span><span class="tag">3D Print</span><span class="tag">Arduino</span><span class="tag">Team Project</span></div>
+        <h3 class="project-title">Multiped robot</h3>
+        <p class="project-desc">First-year team project: a walking robot built to navigate a predetermined track. We validated concepts in CAD, 3D printed the parts and programmed the control on an Arduino.</p>
+      </div>
     </div>
   </section>
 
@@ -1081,8 +1037,8 @@
         <div class="timeline-year">2024 – Present</div>
         <div class="timeline-body">
           <div class="timeline-role">BSc Mechanical Engineering</div>
-          <div class="timeline-org">University of Technology — Eindhoven</div>
-          <div class="timeline-desc">Currently in third year. Core courses include Thermodynamics, Mechanics of Materials, Fluid Mechanics, Dynamics & Control, and Design & Manufacturing.</div>
+          <div class="timeline-org">Eindhoven University of Technology (TU/e)</div>
+          <div class="timeline-desc">Currently in third year, GPA 8.0/10. Core courses include Thermodynamics, Mechanics of Materials, Fluid Mechanics, Dynamics & Control, and Design & Manufacturing.</div>
         </div>
       </div>
 
@@ -1113,13 +1069,11 @@
       </div>
 
       <div class="timeline-item reveal">
-        <div class="timeline-year">09/2025 – 12/2025<br><br>09/2026 – 12/2026</div>
+        <div class="timeline-year">Fall 2025 &amp; Fall 2026</div>
         <div class="timeline-body">
-          <div class="timeline-role">Calculus Teaching Assistant</div>
+          <div class="timeline-role">Teaching Assistant, Calculus II</div>
           <div class="timeline-org">Eindhoven University of Technology</div>
-          <div class="timeline-desc"> Led weekly group sessions to aid students with mathematical theories and provided
-                                      academic support to individual students' needs. Assessed student progress through the
-                                      grading of all coursework, homework assignments, and final course examinations.</div>
+          <div class="timeline-desc">Lead weekly group sessions on calculus theory and problem solving, support students individually, and grade homework, coursework and final exams.</div>
         </div>
       </div>
     </div>
@@ -1168,7 +1122,7 @@
         <div class="detail-section-title">Overview</div>
         <div class="detail-text">
           <p>The idea came to mind as a next step after the course <b><i>Control of a flexible robot system</i></b>. I enjoyed controlling the robot so much, that I decided I wanted to work on all parts of it myself. Since there was no opportunity for me to do that in the University, I made my own robotic arm. </p>
-          <p>I started my design by researching how other people tackled this problem. After finding a couple of online resources, I was confident I could begin sketching a few prototype ideas. Moving through the design process, I eventually had a few parts ready for printing in Siemens NX.</p>
+          <p>I started my design by researching how other people tackled this problem. After finding a couple of online resources, I was confident I could begin sketching a few prototype ideas. Moving through the design process, I modelled the first parts in Siemens NX and got them ready for printing.</p>
           <p>Of course, there were multiple iterations and refinements along the way. This robot is still being continuously improved, helping me learn how to transfer the theories I learned in my classes, into a real working robot.</p>
         </div>
       </div>
@@ -1194,12 +1148,11 @@
     <div style="margin-top:2.5rem">
       <div class="detail-section-title">Gallery</div>
       <div class="project-gallery">
-        <!-- Replace the src with your actual image paths -->
-        <img src="images/_asm2.png" alt="Robot Arm Overview" onclick="openLightbox(this)">
-        <img src="images/IMG_1710.png" alt="Robot Arm Joint Detail" onclick="openLightbox(this)">
-        <img src="images/tech_draw.png" alt="Technical Drawing" onclick="openLightbox(this)">
-        <img src="images/bambu.png" alt="BambuLam" onclick="openLightbox(this)">
-        <img src="images/old_base.png" alt="BambuLam" onclick="openLightbox(this)">
+        <img src="images/_asm2.png" alt="CAD assembly of the 4 DoF robot arm in Siemens NX" onclick="openLightbox(this)">
+        <img src="images/IMG_1710.png" alt="Printed robot arm joint detail" onclick="openLightbox(this)">
+        <img src="images/tech_draw.png" alt="Technical drawing of a robot arm part" onclick="openLightbox(this)">
+        <img src="images/bambu.png" alt="Robot arm part being printed on the 3D printer" onclick="openLightbox(this)">
+        <img src="images/old_base.png" alt="Earlier iteration of the robot arm base" onclick="openLightbox(this)">
       </div>
     </div>
   </section>
@@ -1244,13 +1197,12 @@
   <div class="detail-section-title">Gallery</div>
   <div class="project-gallery">
 
-    <video src="images/video_robott.mp4" preload = "metadata" muted playsinline onclick="openLightbox(this)"></video>
+    <video src="images/video_robott.mp4" poster="images/robot.PNG" preload="metadata" muted playsinline aria-label="Robot picking objects off the conveyor" onclick="openLightbox(this)"></video>
 
-    <!-- Images: replace src with your actual paths -->
-    <img src="images/simulink.png" alt="Robot Arm Overview" onclick="openLightbox(this)">
-    <img src="images/robot.PNG" alt="Robot Arm Overview" onclick="openLightbox(this)">
-    <img src="images/matlab.JPG" alt="Robot Arm " onclick="openLightbox(this)">   
-    <img src="images/PosterGroup15.png" alt="Robot Arm Overview" onclick="openLightbox(this)">
+    <img src="images/simulink.png" alt="Simulink control model of the robot" onclick="openLightbox(this)">
+    <img src="images/robot.PNG" alt="Flexible robot arm setup with conveyor and camera" onclick="openLightbox(this)">
+    <img src="images/matlab.JPG" alt="MATLAB analysis for controller tuning" onclick="openLightbox(this)">   
+    <img src="images/PosterGroup15.png" alt="Group 15 project poster" onclick="openLightbox(this)">
 
   </div>
 </div>
@@ -1363,190 +1315,13 @@
     <div style="margin-top:2.5rem">
       <div class="detail-section-title">Gallery</div>
   <div class="project-gallery">
-    <!-- Images: replace src with your actual paths -->
-    <img src="images/VCA1.png" alt="Robot Arm Overview" onclick="openLightbox(this)">
-    <img src="images/VCA2.png" alt="Robot Arm Overview" onclick="openLightbox(this)">
-    <img src="images/VCA3.png" alt="Robot Arm " onclick="openLightbox(this)">   
-    <img src="images/VCA.png" alt="Robot Arm Overview" onclick="openLightbox(this)">
+    <img src="images/VCA1.png" alt="Voice coil actuator FEMM simulation" onclick="openLightbox(this)">
+    <img src="images/VCA2.png" alt="Voice coil actuator magnetic flux density plot" onclick="openLightbox(this)">
+    <img src="images/VCA3.png" alt="Voice coil actuator design detail" onclick="openLightbox(this)">   
+    <img src="images/VCA.png" alt="Voice coil actuator CAD model" onclick="openLightbox(this)">
 
   </div>
 </div>
-  </section>
-
-  <section class="project-detail" id="project-heat-exchanger">
-    <button class="detail-back" onclick="closeProject('project-heat-exchanger')">← Back to Projects</button>
-    <div class="detail-header">
-      <div class="project-tags"><span class="tag">Thermodynamics</span><span class="tag">MATLAB</span><span class="tag">Modelling</span></div>
-      <h2 class="detail-title">Heat Exchanger Efficiency Model</h2>
-      <p class="detail-intro">A MATLAB model simulating counter-flow heat exchanger performance, comparing the ε-NTU and LMTD design methods across a range of operating conditions.</p>
-    </div>
-    <div class="detail-body">
-      <div>
-        <div class="detail-section-title">Overview</div>
-        <div class="detail-text">
-          <p>Written for the Thermodynamics module, this model takes user-defined inlet temperatures, flow rates, and fluid properties, then calculates outlet temperatures and heat transfer rate using both the Log Mean Temperature Difference (LMTD) and effectiveness-NTU (ε-NTU) methods.</p>
-          <p>The script sweeps across a range of NTU values (0.1 to 5) and plots effectiveness curves for counter-flow and parallel-flow configurations on the same axes — making the performance advantage of counter-flow immediately visible.</p>
-          <p>A secondary parametric study varied the hot-side flow rate from 0.01 to 0.2 kg/s and tracked how outlet temperature and effectiveness changed, producing a surface plot useful for design selection.</p>
-        </div>
-      </div>
-      <div>
-        <div class="detail-section-title">Key Outcomes</div>
-        <ul class="detail-list">
-          <li>Both LMTD and ε-NTU methods implemented and cross-validated</li>
-          <li>Counter-flow shows up to 18% higher effectiveness vs parallel at high NTU</li>
-          <li>Parametric sweep across flow rates with surface plot output</li>
-          <li>Modular functions allow easy substitution of fluid properties</li>
-          <li>Results match textbook example cases within 1%</li>
-        </ul>
-        <div style="margin-top:2rem">
-          <div class="detail-section-title">Tools Used</div>
-          <ul class="detail-list">
-            <li>MATLAB R2023b</li>
-            <li>Built-in plotting (plot, surf, legend)</li>
-            <li>Validated against Cengel &amp; Boles Thermodynamics examples</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div style="margin-top:2.5rem">
-      <div class="detail-section-title">Code</div>
-      <div class="detail-placeholder">
-        <strong>MATLAB scripts coming soon</strong>
-        Annotated .m files for both the LMTD and ε-NTU methods, plus the parametric sweep, will be available here or on GitHub.
-      </div>
-    </div>
-  </section>
-
-  <section class="project-detail" id="project-desk-organiser">
-    <button class="detail-back" onclick="closeProject('project-desk-organiser')">← Back to Projects</button>
-    <div class="detail-header">
-      <div class="project-tags"><span class="tag">Prototyping</span><span class="tag">Design</span><span class="tag">DFM</span></div>
-      <h2 class="detail-title">Ergonomic Desk Organiser</h2>
-      <p class="detail-intro">A first-year design project applying Design for Manufacture principles, produced in SolidWorks and fabricated from laser-cut sheet material using a fully parametric model.</p>
-    </div>
-    <div class="detail-body">
-      <div>
-        <div class="detail-section-title">Overview</div>
-        <div class="detail-text">
-          <p>The brief was to design a functional desktop object that could be manufactured from flat sheet stock and assembled without adhesives or fasteners — relying only on press-fit joinery.</p>
-          <p>I chose a modular desk organiser with interlocking slot joints. The key design constraint was parametric control: every slot, tab, and panel dimension is driven by two master variables — material thickness and grid pitch — so the whole model updates correctly when either changes.</p>
-          <p>The final version was cut from 3 mm MDF on the university laser cutter. Assembly took under five minutes with no tools. A follow-up iteration explored 4 mm birch plywood, which improved rigidity noticeably.</p>
-        </div>
-      </div>
-      <div>
-        <div class="detail-section-title">Key Outcomes</div>
-        <ul class="detail-list">
-          <li>Fully parametric SolidWorks model driven by 2 master variables</li>
-          <li>Press-fit joinery — no adhesives or fasteners required</li>
-          <li>Laser-cut from 3 mm MDF; iterated to 4 mm birch ply</li>
-          <li>Tool-free assembly in under 5 minutes</li>
-          <li>DFM checklist used to reduce part count by 30% vs initial concept</li>
-        </ul>
-        <div style="margin-top:2rem">
-          <div class="detail-section-title">Tools Used</div>
-          <ul class="detail-list">
-            <li>SolidWorks (parametric part and assembly)</li>
-            <li>Laser cutter (Trotec Speedy 400)</li>
-            <li>DXF export for cutting path generation</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div style="margin-top:2.5rem">
-      <div class="detail-section-title">Drawings & Files</div>
-      <div class="detail-placeholder">
-        <strong>Technical drawings coming soon</strong>
-        Dimensioned drawings, SolidWorks files, and laser-cut DXF templates will be linked here.
-      </div>
-    </div>
-  </section>
-
-  <section class="project-detail" id="project-pendulum">
-    <button class="detail-back" onclick="closeProject('project-pendulum')">← Back to Projects</button>
-    <div class="detail-header">
-      <div class="project-tags"><span class="tag">MATLAB</span><span class="tag">Dynamics</span><span class="tag">Simulation</span></div>
-      <h2 class="detail-title">Pendulum Motion Simulation</h2>
-      <p class="detail-intro">A MATLAB simulation comparing small-angle and full nonlinear pendulum dynamics, with animated motion and a study of how drag coefficient affects energy dissipation.</p>
-    </div>
-    <div class="detail-body">
-      <div>
-        <div class="detail-section-title">Overview</div>
-        <div class="detail-text">
-          <p>This simulation was built as a self-directed extension of the Engineering Dynamics module. The goal was to explore where the small-angle approximation (sin θ ≈ θ) breaks down and how drag changes the system's behaviour.</p>
-          <p>Using MATLAB's ode45 solver, I integrated the full nonlinear equation of motion for a damped pendulum across a range of initial angles (5° to 60°) and drag coefficients. The results are plotted as phase portraits and time-series overlays between the linear and nonlinear models.</p>
-          <p>An animation was added using MATLAB's built-in animation loop, showing the pendulum bob in real time alongside the live energy plot. At initial angles above ~20°, the approximation error becomes clearly visible.</p>
-        </div>
-      </div>
-      <div>
-        <div class="detail-section-title">Key Outcomes</div>
-        <ul class="detail-list">
-          <li>Nonlinear ODE solved with ode45 across multiple initial conditions</li>
-          <li>Small-angle error exceeds 5% for θ₀ &gt; ~22°</li>
-          <li>Phase portrait plots reveal damped spiral convergence to rest</li>
-          <li>Drag coefficient sweep from 0 to 0.5 N·s/m with energy dissipation plots</li>
-          <li>Real-time animation with live energy tracking</li>
-        </ul>
-        <div style="margin-top:2rem">
-          <div class="detail-section-title">Tools Used</div>
-          <ul class="detail-list">
-            <li>MATLAB R2023b (ode45, animation, phase plots)</li>
-            <li>Symbolic Math Toolbox for equation derivation</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div style="margin-top:2.5rem">
-      <div class="detail-section-title">Simulation Files</div>
-      <div class="detail-placeholder">
-        <strong>MATLAB scripts coming soon</strong>
-        Annotated simulation code and sample output plots will be uploaded here and on GitHub.
-      </div>
-    </div>
-  </section>
-
-  <section class="project-detail" id="project-gripper">
-    <button class="detail-back" onclick="closeProject('project-gripper')">← Back to Projects</button>
-    <div class="detail-header">
-      <div class="project-tags"><span class="tag">Team Project</span><span class="tag">CAD</span><span class="tag">GD&amp;T</span></div>
-      <h2 class="detail-title">Pneumatic Gripper Mechanism</h2>
-      <p class="detail-intro">A group project to design a two-finger pneumatic gripper for handling irregular objects, achieving reliable grip across five test geometries through careful mechanical linkage design.</p>
-    </div>
-    <div class="detail-body">
-      <div>
-        <div class="detail-section-title">Overview</div>
-        <div class="detail-text">
-          <p>The team of four was tasked with designing a gripper capable of picking and placing objects of irregular geometry — a cylinder, a hex bolt, a foam cube, a PET bottle, and a flat disc. The constraint was a single-acting pneumatic actuator at 4 bar supply pressure.</p>
-          <p>My contribution was the mechanical linkage connecting the actuator piston to the two finger bodies. I designed a symmetric toggle mechanism that converts the linear actuator stroke into a parallel jaw motion, maintaining even grip force regardless of object width within a 15–60 mm range.</p>
-          <p>I also produced the full GD&T drawing set for the finger bodies and pivot pins, specifying tolerances to ensure consistent assembly and repeatable grip force. The prototype was machined from aluminium and assembled in the university workshop.</p>
-        </div>
-      </div>
-      <div>
-        <div class="detail-section-title">Key Outcomes</div>
-        <ul class="detail-list">
-          <li>Reliable grip achieved on all 5 test geometries</li>
-          <li>Operating range: 15–60 mm jaw opening</li>
-          <li>Toggle linkage maintains constant grip force across jaw range</li>
-          <li>Full GD&T drawing set produced for machining and assembly</li>
-          <li>Prototype machined from aluminium alloy 6061</li>
-          <li>Presented at end-of-module design review with poster</li>
-        </ul>
-        <div style="margin-top:2rem">
-          <div class="detail-section-title">Tools Used</div>
-          <ul class="detail-list">
-            <li>SolidWorks (parts, assembly, motion study)</li>
-            <li>GD&T drawing set to BS 8888</li>
-            <li>Workshop machining (lathe, mill, drill press)</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div style="margin-top:2.5rem">
-      <div class="detail-section-title">Poster & Drawings</div>
-      <div class="detail-placeholder">
-        <strong>Project poster &amp; drawings coming soon</strong>
-        The design review poster, SolidWorks assembly, and GD&T drawing set will be available here.
-      </div>
-    </div>
   </section>
 
   <!-- FOOTER -->
@@ -1797,7 +1572,7 @@
       }
       currentScale = Math.max(0.5, Math.min(currentScale, 4));
       updateTransform();
-    });
+    }, { passive: false });
 
     // Mouse drag logic
     lightboxImg.addEventListener('mousedown', (e) => {
@@ -1821,6 +1596,37 @@
         isDragging = false;
         lightboxImg.style.cursor = 'grab';
       }
+    });
+
+
+    // Touch: one finger pans, two fingers pinch-zoom
+    let pinchStartDist = 0, pinchStartScale = 1;
+    const touchDist = (t) => Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
+    lightboxImg.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 2) {
+        pinchStartDist = touchDist(e.touches);
+        pinchStartScale = currentScale;
+        isDragging = false;
+      } else if (e.touches.length === 1) {
+        isDragging = true;
+        startX = e.touches[0].clientX - translateX;
+        startY = e.touches[0].clientY - translateY;
+      }
+    }, { passive: true });
+    lightboxImg.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+      if (e.touches.length === 2 && pinchStartDist) {
+        currentScale = Math.max(0.5, Math.min(pinchStartScale * touchDist(e.touches) / pinchStartDist, 4));
+        updateTransform();
+      } else if (e.touches.length === 1 && isDragging) {
+        translateX = e.touches[0].clientX - startX;
+        translateY = e.touches[0].clientY - startY;
+        updateTransform();
+      }
+    }, { passive: false });
+    lightboxImg.addEventListener('touchend', (e) => {
+      if (e.touches.length < 2) pinchStartDist = 0;
+      if (e.touches.length === 0) isDragging = false;
     });
 
     // Close lightbox if clicking outside the image
